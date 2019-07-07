@@ -6,7 +6,7 @@
 # 
 # UFRJ/POLI/DEL - Introdução ao Aprendizado de Máquina (EEL891) <br>
 # Prof. Heraldo Almeira - Julho de 2019 <br>
-# Maria Gabriella Andrade Felgas (DRE: 111471809)
+# Maria Gabriella Andrade Felgas
 
 # ### Importando as Bibliotecas e Ferramentas
 
@@ -603,26 +603,26 @@ test_1.head()
 corr_matrix_1 = train_1.corr()
 
 plt.subplots(figsize = (25, 25))
-sns.heatmap(corr_matrix_1, square=True, cbar=True, annot = True, cmap='GnBu')
+sns.heatmap(corr_matrix_1, square=True, cbar=True, annot = True, cmap='Spectral')
 plt.show()
 
 
 # In[42]:
 
 
-# Substituindo os valores dos atributos de acordo com a observacao acima para o conjunto de treino
+## Substituindo os valores dos atributos de acordo com a observacao acima para o conjunto de treino
 
 # train_2 eh referente a segunda alternativa de tratamento dos atributos literais
 train_2 = train.copy()
 
 # cut
-train_2['cut'] = train_2['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5}, inplace = False)
+train_2['cut'] = train_2['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5})
 
 # color
-train_2['color'] = train_2['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7}, inplace = False)
+train_2['color'] = train_2['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7})
 
 # clarity
-train_2['clarity'] = train_2['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                                  'SI1': 6, 'I1': 7, 'SI2': 8}, inplace = False)
+train_2['clarity'] = train_2['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                                  'SI1': 6, 'I1': 7, 'SI2': 8})
 
 train_2.head()
 
@@ -654,7 +654,7 @@ test_2.head()
 corr_matrix_2 = train_2.corr()
 
 plt.subplots(figsize = (10, 10))
-sns.heatmap(corr_matrix_2, square=True, cbar=True, annot = True, cmap='GnBu')
+sns.heatmap(corr_matrix_2, square=True, cbar=True, annot = True, cmap='Spectral')
 plt.show()
 
 
