@@ -2,11 +2,13 @@
 # coding: utf-8
 
 # # Trabalho 1 - Regressão Multivariável
-# ## Estimativa de preços de diamantes de acordo com suas características.
+# # Estimativa de preços de diamantes de acordo com suas características.
 # 
 # UFRJ/POLI/DEL - Introdução ao Aprendizado de Máquina (EEL891) <br>
 # Prof. Heraldo Almeira - Julho de 2019 <br>
-# Maria Gabriella Andrade Felgas
+# Maria Gabriella Andrade Felgas (DRE: 111471809)
+
+# ## Mineração e Análise de Dados
 
 # ### Importando as Bibliotecas e Ferramentas
 
@@ -26,7 +28,7 @@ import seaborn as sns
 
 # Bibliotecas dos modelos de treinamento
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, RidgeCV, ElasticNet
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, BaggingRegressor,                             GradientBoostingRegressor, AdaBoostRegressor 
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, BaggingRegressor,                             GradientBoostingRegressor, AdaBoostRegressor, ExtraTreesRegressor
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
@@ -41,14 +43,13 @@ from sklearn.metrics import mean_squared_log_error, mean_squared_error, r2_score
 
 # ### Análise e Tratamento de Dados
 
-# #### Importação de Dados
+# ### Carregando o conjunto de treino
 
 # In[2]:
 
 
 # Carregando os dados de treino como dataframe
 # e observando os atributos
-
 train = pd.read_csv('data/train.csv')
 train.head()
 
@@ -56,12 +57,14 @@ train.head()
 # In[3]:
 
 
+# Verificando tamanho do dataframe
 train.shape
 
 
 # In[4]:
 
 
+# Verificando informacoes especificas
 train.info()
 
 
@@ -69,7 +72,6 @@ train.info()
 
 
 # Setando o index do arquivo como arquivo do dataframe
-
 train = train.set_index('id')
 train.head()
 
@@ -77,460 +79,357 @@ train.head()
 # In[6]:
 
 
-# Carregando os dados de teste como dataframe
-
-test = pd.read_csv('data/test.csv')
-test.head()
+# Verificando se existem valores nulos para o conjunto de treino
+train.isnull().sum()
 
 
 # In[7]:
 
 
-test.shape
-
-
-# In[8]:
-
-
-test.info()
-
-
-# In[9]:
-
-
-# Setando o index do arquivo como arquivo do dataframe
-
-test = test.set_index('id')
-test.head()
-
-
-# In[10]:
-
-
-# Verificando se existem valores nulos para o conjunto de treino
-
-train.isnull().sum()
-
-
-# In[11]:
-
-
-# Verificando se existem valores nulos para o conjunto de teste
-
-test.isnull().sum()
-
-
-# In[12]:
-
-
 # Verificando os detalhes de cada caracteristica
-
 train.describe()
-
-
-# In[13]:
-
-
-# Verificando os detalhes de cada caracteristica
-
-test.describe()
 
 
 # Como x, y e z são variáveis relacionadas às dimensões de cada diamante, não faz sentido que nenhuma delas seja igual a 0. Assim, é necessário retirar estes dados do conjunto de treino para que o modelo não seja prejudicado.
 
-# In[14]:
+# In[8]:
 
 
 # Para realizar este processamento, redefine-se o conjunto de treino como o que corresponde a condicao a seguir
-
 train = train[(train[['x','y','z']] != 0).all(axis=1)]
 
 # Para confirmar
 train.describe()
 
 
+# ### Carregando o conjunto de teste
+
+# In[9]:
+
+
+# Carregando os dados de teste como dataframe
+test = pd.read_csv('data/test.csv')
+test.head()
+
+
+# In[10]:
+
+
+test.shape
+
+
+# In[11]:
+
+
+test.info()
+
+
+# In[12]:
+
+
+# Setando o index do arquivo como arquivo do dataframe
+test = test.set_index('id')
+test.head()
+
+
+# In[13]:
+
+
+# Verificando se existem valores nulos para o conjunto de teste
+test.isnull().sum()
+
+
+# In[14]:
+
+
+# Verificando os detalhes de cada caracteristica
+test.describe()
+
+
 # Agora, verifica-se a distribuição de cada um dos atributos numéricos do dataset, verificando seus padrões e outliers.
 
-# #### Tratamento dos Dados
-
-# ##### Preço
-
-# ###### Observação
+# ### Tratamento dos dados
 
 # In[15]:
 
 
-# Analisando as caracteristicas do atributo
+# Cria a matriz de correlacao entre os atributos numericos para visualizacao inicial
+corr_matrix = train.corr()
 
-train['price'].describe()
+plt.subplots(figsize = (10, 10))
+sns.heatmap(corr_matrix, square=True, cbar=True, annot = True, cmap='Spectral')
+plt.show()
 
 
 # In[16]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+# Funcao de analise de atributo
+def analysis(feature, hist=True):
+    
+    # Definindo os valores de Skewness e Kurtosis para analisar
+    # a simetria e quantidade de outliers respectivamente
+    print('Skewness: {}'.format(train[feature].skew()))
+    print('Kurtosis: {}'.format(train[feature].kurt()))
 
-print('Skewness: {}'.format(train['price'].skew()))
-print('Kurtosis: {}'.format(train['price'].kurt()))
+    if hist:
+        # Plotando o histograma
+        plt.figure(figsize=(20,10))
+        train[feature].hist(bins = 500)
+        plt.show()
+    
+    if feature != 'price':
+        # Plotando o diagrama de dispersão
+        plt.figure(figsize=(20,10))
+        train.plot.scatter(x = feature, y = 'price')
+        plt.show()
+        
+        
+# Funcao que checa a contagem para cada limiar    
+def count_limit(feature, inf_limit, sup_limit, hop):
+    
+    n = int((sup_limit - inf_limit) / hop)
+    p = np.zeros(((n + 1), 2))
+    
+    for i in range(n + 1):
+        p[i][0] = train[train[feature] < (inf_limit + (hop * i))][feature].count()
+        p[i][1] = np.round((p[i][0] / train[train[feature] < sup_limit][feature].count()) * 100, 2)
+        print('Quantidade de pontos abaixo de {} :'.format(inf_limit + (hop * i)), p[i][0],               'Porcentagem: {} %'.format(p[i][1]))
 
-# Plotando o histograma
 
-train['price'].hist(bins = 200)
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# Como o preço é o alvo a ser considerado no treinamento do modelo, decidi manter todos os dados por enquanto.
-
-# ##### Carat
-
-# ###### Observação
+# ### Preço
 
 # In[17]:
 
 
-# Analisando as caracteristicas do atributo
-
-train['carat'].describe()
+train['price'].describe()
 
 
 # In[18]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+analysis('price')
 
-print('Skewness: {}'.format(train['carat'].skew()))
-print('Kurtosis: {}'.format(train['carat'].kurt()))
-
-
-# Plotando o histograma
-
-train['carat'].hist(bins = 200)
-plt.show() 
-
-
-# Plotando o diagrama de dispersão
-
-train.plot.scatter(x = 'carat', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com carat acima de 3.
 
 # In[19]:
 
 
-train = train[train['carat'] < 3]
-
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente apos remocao
-
-print('Skewness: {}'.format(train['carat'].skew()))
-print('Kurtosis: {}'.format(train['carat'].kurt()))
-
-# Plotando o diagrama de dispersão novamente
-
-train.plot.scatter(x = 'carat', y = 'price')
-plt.show()
+count_limit('price', 2500, 20000, 2500)
 
 
-# ##### x
+# #### Removendo os outliers
 
-# ###### 2.2.3.1. Observação
+# De acordo com os resultados acima, decidi remover os dados com preço acima de 10000.
 
 # In[20]:
 
 
-# Analisando as caracteristicas do atributo
+# train = train[train['price'] < 10000]
 
-train['x'].describe()
+# analysis('price')
 
+
+# ### Carat
 
 # In[21]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+train['carat'].describe()
 
-print('Skewness: {}'.format(train['x'].skew()))
-print('Kurtosis: {}'.format(train['x'].kurt()))
-
-# Plotando o histograma
-
-train['x'].hist(bins = 200)
-plt.show() 
-
-
-# Plotando o diagrama de dispersão
-
-train.plot.scatter(x = 'x', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, não é necessário remover outliers para este atributo.
-
-# ##### y
-
-# ###### Observação
 
 # In[22]:
 
 
-# Analisando as caracteristicas do atributo
-
-train['y'].describe()
+analysis('carat')
 
 
 # In[23]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
-
-print('Skewness: {}'.format(train['y'].skew()))
-print('Kurtosis: {}'.format(train['y'].kurt()))
-
-# Plotando o histograma
-
-train['y'].hist(bins = 200)
-plt.show() 
+count_limit('carat', 0.5, 3, 0.5)
 
 
-# Plotando o diagrama de dispersão
+# #### Removendo os outliers
 
-train.plot.scatter(x = 'y', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com y acima de 10.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com *carat* acima de 2. Além disso, é importante observar o comportamento espaçado do atributo, assumindo conjuntos de valores a partir de determinadas "linhas bem definidas". Por conta desta característica, divido o atributo em 4 novos atributos diferentes.
 
 # In[24]:
 
 
-train = train[train['y'] < 10]
+train = train[train['carat'] < 2.5]
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente apos remocao
-
-print('Skewness: {}'.format(train['y'].skew()))
-print('Kurtosis: {}'.format(train['y'].kurt()))
-
-# Plotando o diagrama de dispersão novamente
-
-train.plot.scatter(x = 'y', y = 'price')
-plt.show()
+analysis('carat', hist=False)
 
 
-# ##### z
-
-# ###### Observação
+# ### x
 
 # In[25]:
 
 
-# Analisando as caracteristicas do atributo
-
-train['z'].describe()
+train['x'].describe()
 
 
 # In[26]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+analysis('x')
 
-print('Skewness: {}'.format(train['z'].skew()))
-print('Kurtosis: {}'.format(train['z'].kurt()))
-
-# Plotando o histograma
-
-train['z'].hist(bins = 200)
-plt.show() 
-
-
-# Plotando o diagrama de dispersão
-
-train.plot.scatter(x = 'z', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com z abaixo de 2 e acima de 5.5.
 
 # In[27]:
 
 
-train = train[train['z'] > 2]
-train = train[train['z'] < 5.5]
-
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente apos remocao
-
-print('Skewness: {}'.format(train['z'].skew()))
-print('Kurtosis: {}'.format(train['z'].kurt()))
-
-# Plotando o diagrama de dispersão novamente
-
-train.plot.scatter(x = 'z', y = 'price')
-plt.show()
+count_limit('x', 4, 9, 1)
 
 
-# ##### depth
+# #### Removendo os outliers
 
-# ###### Observação
+# De acordo com a observação do gráfico acima e da distribuição de *x*, não é necessário remover outliers para este atributo.
+
+# ### y
 
 # In[28]:
 
 
-# Analisando as caracteristicas do atributo
-
-train['depth'].describe()
+train['y'].describe()
 
 
 # In[29]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+analysis('y')
 
-print('Skewness: {}'.format(train['depth'].skew()))
-print('Kurtosis: {}'.format(train['depth'].kurt()))
-
-# Plotando o histograma
-
-train['depth'].hist(bins = 200)
-plt.show() 
-
-
-# Plotando o diagrama de dispersão
-
-train.plot.scatter(x = 'depth', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com depth entre 56 e 67.
 
 # In[30]:
 
 
-train = train[train['depth'] > 56]
-train = train[train['depth'] < 67]
-
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente apos remocao
-
-print('Skewness: {}'.format(train['depth'].skew()))
-print('Kurtosis: {}'.format(train['depth'].kurt()))
-
-# Plotando o diagrama de dispersão novamente
-
-train.plot.scatter(x = 'depth', y = 'price')
-plt.show()
+count_limit('y', 5, 35, 5)
 
 
-# ##### table
+# #### Removendo os outliers
 
-# ###### Observação
+# De acordo com a observação do gráfico acima e da distribuição de *y*, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com y acima de 10.
 
 # In[31]:
 
 
-# Analisando as caracteristicas do atributo
+train = train[train['y'] < 10]
 
-train['table'].describe()
+analysis('y')
 
+
+# ### z
 
 # In[32]:
 
 
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente
+train['z'].describe()
 
-print('Skewness: {}'.format(train['table'].skew()))
-print('Kurtosis: {}'.format(train['table'].kurt()))
-
-# Plotando o histograma
-
-train['table'].hist(bins = 200)
-plt.show() 
-
-
-# Plotando o diagrama de dispersão
-
-train.plot.scatter(x = 'table', y = 'price')
-plt.show()
-
-
-# ###### Removendo os Outliers
-
-# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com table entre 51 e 67.
 
 # In[33]:
 
 
-train = train[train['table'] > 51]
-train = train[train['table'] < 67]
-
-# Definindo os valores de Skewness e Kurtosis para analisar
-# a simetria e quantidade de outliers respectivamente apos remocao
-
-print('Skewness: {}'.format(train['table'].skew()))
-print('Kurtosis: {}'.format(train['table'].kurt()))
-
-# Plotando o diagrama de dispersão novamente
-
-train.plot.scatter(x = 'table', y = 'price')
-plt.show()
+analysis('z')
 
 
 # In[34]:
 
 
-# Cria a matriz de correlacao entre os atributos
-corr_matrix = train.corr()
-
-plt.subplots(figsize = (10, 10))
-sns.heatmap(corr_matrix, square=True, cbar=True, annot = True, cmap='Spectral')
-plt.show()
+count_limit('z', 1, 6, 0.5)
 
 
-# Os valores de x, y, z estão bastante correlacionados entre si e tem bastante influencia sobre o preço. Desta forma, eles foram transformados em um único atributo, volume, que é um relação entre as três variáveis.
+# #### Removendo os outliers
+
+# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com z abaixo de 2.3 e acima de 5.
 
 # In[35]:
 
 
-train['volume'] = train['x'] * train['y'] * train['z']
+train = train[train['z'] > 2.2]
+train = train[train['z'] < 5.3]
 
-# Cria a matriz de correlacao entre os atributos, agora com a adicao do atributo volume
-corr_matrix = train.corr()
-
-plt.subplots(figsize = (10, 10))
-sns.heatmap(corr_matrix, square=True, cbar=True, annot = True, cmap='Spectral')
-plt.show()
+analysis('z')
 
 
-# Como pode ser observado, os atributos carat e volume tem correlação de 1, o que faz sentido, considerando que carat representa o peso em quilates de cada diamante. Será que faz sentido manter ambos os atributos?
-# 
-# Decidiu-se testar uma nova combinação entre x e y como demonstrado a seguir.
+# ### depth
 
 # In[36]:
 
 
-train['ratio'] = train['x'] / train['y']
+train['depth'].describe()
 
-# Cria a matriz de correlacao entre os atributos, agora com a adicao do atributo ratio
+
+# In[37]:
+
+
+analysis('depth')
+
+
+# In[38]:
+
+
+count_limit('depth', 45, 80, 5)
+
+
+# #### Removendo os outliers
+
+# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com depth entre 56 e 67.
+
+# In[39]:
+
+
+train = train[train['depth'] > 56]
+train = train[train['depth'] < 67]
+
+analysis('depth')
+
+
+# ### table
+
+# In[40]:
+
+
+train['table'].describe()
+
+
+# In[41]:
+
+
+analysis('table')
+
+
+# In[42]:
+
+
+count_limit('table', 45, 75, 5)
+
+
+# #### Removendo os outliers
+
+# De acordo com a observação do gráfico acima, defino os outliers como sendo os pontos fora da distribuição padrão, ou seja, com table entre 54 e 67.
+
+# In[43]:
+
+
+train = train[train['table'] > 54]
+train = train[train['table'] < 67]
+
+analysis('table')
+
+
+# ### Outras observações
+
+# In[44]:
+
+
+# Criando os graficos de dispersao para visualizacao geral
+
+sns.pairplot(train)
+
+
+# In[45]:
+
+
+# Cria a matriz de correlacao entre os atributos numericos
 corr_matrix = train.corr()
 
 plt.subplots(figsize = (10, 10))
@@ -538,18 +437,7 @@ sns.heatmap(corr_matrix, square=True, cbar=True, annot = True, cmap='Spectral')
 plt.show()
 
 
-# Como o novo atributo testado não parece influenciar suficientemente o preço e o atributo de volume possui correlação unitária com carat, decidi retornar o conjunto de dados ao seu estado original. 
-
-# In[37]:
-
-
-train = train.drop(['volume'], axis = 1)
-train = train.drop(['ratio'], axis = 1)
-
-train.head()
-
-
-# In[38]:
+# In[46]:
 
 
 # Relacionando os atributos literais ao preco, com visualizacao
@@ -569,371 +457,180 @@ plt.show()
 
 # Como pode ser observado nos gráficos acima, as opções de cada um dos atributos influenciam o preço de maneiras diferentes. As barras coloridas significam o valor estimado para cada opção e a linha ao final de cada barra informa a incerteza destas estimativas.
 
-# Por conta deste fenomeno, decidiu-se lidar com estes atributos de duas maneiras diferentes:
-# - Transformando cada uma destas opções em novos atributos;
-# - Atribuindo valores numéricos de acordo com a influência sobre o preço, valores maiores para aqueles que tem valores estimados de preço maiores.
-#     
-# A primeira opção é realizada desta forma pois os valores numéricos influenciam diretamente os modelos de regressão que utilizam os pesos relacionados a cada atributo, como a regressão linear.
-# A segunda opção transforma cada sub-característica em um atributo booleano e pode influenciar positivamente na maneira como os modelos funcionam.
-
-# In[39]:
-
-
-# Criando novos atributos a partir das classes dos atributos literais para o conjunto de treino
-
-# train_1 eh referente a primeira alternativa de tratamento dos atributos literais
-train_1 = pd.get_dummies(train)
-train_1.head()
-
-
-# In[40]:
-
-
-# Criando novos atributos a partir das classes dos atributos literais para o conjunto de teste
-
-# test_1 eh referente a primeira alternativa de tratamento dos atributos literais
-test_1 = pd.get_dummies(test)
-test_1.head()
-
-
-# In[41]:
-
-
-# Criando a matriz de correlacao para o primeiro tratamento
-corr_matrix_1 = train_1.corr()
-
-plt.subplots(figsize = (25, 25))
-sns.heatmap(corr_matrix_1, square=True, cbar=True, annot = True, cmap='Spectral')
-plt.show()
-
-
-# In[42]:
-
-
-## Substituindo os valores dos atributos de acordo com a observacao acima para o conjunto de treino
-
-# train_2 eh referente a segunda alternativa de tratamento dos atributos literais
-train_2 = train.copy()
-
-# cut
-train_2['cut'] = train_2['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5})
-
-# color
-train_2['color'] = train_2['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7})
-
-# clarity
-train_2['clarity'] = train_2['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                                  'SI1': 6, 'I1': 7, 'SI2': 8})
-
-train_2.head()
-
-
-# In[43]:
-
-
-# Substituindo os valores dos atributos de acordo com a observacao acima para o conjunto de teste
-
-# test_2 eh referente a segunda alternativa de tratamento dos atributos literais
-test_2 = test.copy()
-
-# cut
-test_2['cut'] = test_2['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5}, inplace = False)
-
-# color
-test_2['color'] = test_2['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7}, inplace = False)
-
-# clarity
-test_2['clarity'] = test_2['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                                  'SI1': 6, 'I1': 7, 'SI2': 8}, inplace = False)
-
-test_2.head()
-
-
-# In[44]:
-
-
-# Criando a matriz de correlacao para o segundo tratamento
-corr_matrix_2 = train_2.corr()
-
-plt.subplots(figsize = (10, 10))
-sns.heatmap(corr_matrix_2, square=True, cbar=True, annot = True, cmap='Spectral')
-plt.show()
-
-
-# In[45]:
-
-
-# Criando o conjunto de treino e de teste a partir do conjunto da primeira alternativa
-
-x_1 = train_1.drop(['price'], axis = 1)
-y_1 = train_1['price']
-
-X_train_1, X_test_1, y_train_1, y_test_1 = train_test_split(x_1, y_1, random_state = 2, test_size=0.3)
-
-
-# In[46]:
-
-
-# Verificando o conjunto de treino
-
-X_train_1.head()
-
+# Por conta deste fenômeno, decidiu-se lidar com estes atributos da seguinte maneira:
+# - Atribuindo valores numéricos de acordo com a influência sobre o preço, ou seja, de acordo com o valor esperado de preço para cada categoria, através da média.
+# 
+# Esta opção foi escolhida pois apresentou melhores resultados em comparação com a utilização de *Hot Encoding* e está descrita pela função abaixo:
 
 # In[47]:
 
 
-# Verificando o conjunto de teste
-
-X_test_1.head()
+# Funcao de transformacao dos atributos categoricos
+def categ_feature(feature, data):
+    mean = train.groupby(feature)['price'].mean()
+    mean_sort = mean.reset_index().sort_values(['price']).set_index([feature]).astype(int)
+    
+    mean_sort.to_dict()
+    mean_sort = mean_sort['price']
+    
+    data[feature] = data[feature].replace(mean_sort, inplace = False)
+    
+    return mean_sort, data
 
 
 # In[48]:
 
 
-# Criando o conjunto de treino e de teste a partir da segunda alternativa
+# Aplicando a funcao para os dados de treino e teste
+mean_sort_cut, train = categ_feature('cut', train)
+test['cut'] = test['cut'].replace(mean_sort_cut, inplace = False)
 
-x_2 = train_2.drop(['price'], axis = 1)
-y_2 = train_2['price']
+mean_sort_color, train = categ_feature('color', train)
+test['color'] = test['color'].replace(mean_sort_color, inplace = False)
 
-X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(x_2, y_2, random_state = 2, test_size=0.3)
+mean_sort_clarity, train = categ_feature('clarity', train)
+test['clarity'] = test['clarity'].replace(mean_sort_clarity, inplace = False)
+
+test.head()
 
 
 # In[49]:
 
 
-# Verificando o conjunto de treino
+# Criando a matriz de correlacao para o segundo tratamento
+corr_matrix = train.corr()
 
-X_train_2.head()
+plt.subplots(figsize = (10, 10))
+sns.heatmap(corr_matrix, square=True, cbar=True, annot = True, cmap='Spectral')
+plt.show()
 
 
 # In[50]:
 
 
-# Verificando o conjunto de teste
+# Criando o conjunto de treino e de teste para treinar o modelo a partir de train modificado
+x = train.drop(['price'], axis = 1)
+y = train['price']
 
-X_test_2.head()
 
+X_train, X_test, y_train, y_test = train_test_split(x, y, random_state = 2, test_size=0.3)
 
-# Para definir quais são os atributos mais importantes, aplica-se um algoritmo de Random Forest que, através do objeto SelectFromModel, seleciona aqueles que possuem maior peso sobre o preço.
 
 # In[51]:
 
 
-# Definindo a funcao que calcula o RMSPE para comparar os erros
+# Arrays de referência para comparação entre modelos
+model_dict = {'Linear Regressor': 1, 'Lasso Regression': 1, 'Ridge Regression': 1, 'AdaBoost Regression': 1,             'Gradient Boosting Regression': 1, 'Random Forest Regression': 1, 'Extra Trees Regression': 1}
 
-def rmspe_score(y_test, y_pred):
-
-    return np.sqrt(np.mean(np.square(((y_test - y_pred) / y_test)), axis = 0))
-
-# Inicializando listas para guardar os scores
-R2_Scores_1 = []
-R2_Scores_2 = []
-models = ['Linear Regression', 'Lasso Regression', 'AdaBoost Regression', 'Ridge Regression',          'GradientBoosting Regression', 'RandomForest Regression', 'KNeighbours Regression']
-
-
-# #### Linear
 
 # In[52]:
 
 
-# Definindo a funcao de treinamento do modelo de regressão linear
-def train_lr(X_train, y_train, X_test, y_test, data):
-    lr = LinearRegression()
-    lr.fit(X_train , y_train)
-    accuracies = cross_val_score(estimator = lr, X = X_train, y = y_train, cv = 5,verbose = 1)
-    y_pred = lr.predict(X_test)
-    print('')
-    print('####### Linear Regression #######')
-    print('Score : %.4f' % lr.score(X_test, y_test))
-    print(accuracies)
-
-    mse = mean_squared_error(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    rmse = mean_squared_error(y_test, y_pred)**0.5
-    r2 = r2_score(y_test, y_pred)
-    rmspe = rmspe_score(y_test, y_pred)
-
-    print('')
-    print('MSE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mse)
-    print('MAE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mae)
-    print('RMSE  - Conjunto de dados {}'.format(data),' : %0.2f ' % rmse)
-    print('R2    - Conjunto de dados {}'.format(data),' : %0.2f ' % r2)
-    print('RMSPE - Conjunto de dados {}'.format(data),' : %0.2f ' % rmspe)
+# Função que calcula o RMSPE para validacao dos modelos
+def rmspe_score(y_test, y_pred):
     
-    if data == 1:
-        R2_Scores_1.append(r2)
-    else:        
-        R2_Scores_2.append(r2)
+    rmspe = np.sqrt(np.mean(np.square(((y_test - y_pred) / y_test)), axis = 0))
+
+    return rmspe
 
 
 # In[53]:
 
 
-# Treinando linear para o primeiro conjunto de dados
+# Funcao de regressao generica, para varios modelos diferentes
+def model_analysis(X_train, X_test, y_train, y_test, regressor, name):
+    regressor.fit(X_train, y_train)
+    accuracies = cross_val_score(estimator = regressor, X = X_train, y = y_train, cv = 5,verbose = 1)
+    y_pred = regressor.predict(X_test)
+    print('')
+    print('###### {} ######'. format(name))
+    print('Score : %.6f' % regressor.score(X_test, y_test))
+    print(accuracies)
 
-train_lr(X_train_1, y_train_1, X_test_1, y_test_1, data = 1)
+    mse = mean_squared_error(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = mean_squared_error(y_test, y_pred) ** 0.5
+    r2 = r2_score(y_test, y_pred)
+    rmspe = rmspe_score(y_test, y_pred)
+
+    print('')
+    print('MSE   : %0.6f ' % mse)
+    print('MAE   : %0.6f ' % mae)
+    print('RMSE  : %0.6f ' % rmse)
+    print('R2    : %0.6f ' % r2)
+    print('RMSPE : %0.6f ' % rmspe)
+    
+    model_dict[name] = round(rmspe, 6)
 
 
 # In[54]:
 
 
-# Treinando linear para o segundo conjunto de dados
+get_ipython().run_cell_magic('time', '', "\nlr = LinearRegression()\nmodel_analysis(X_train, X_test, y_train, y_test, lr, 'Linear Regressor')")
 
-train_lr(X_train_2, y_train_2, X_test_2, y_test_2, data = 2)
-
-
-# #### Lasso
 
 # In[55]:
 
 
-def train_la(X_train, y_train, X_test, y_test, data):
-    la = Lasso(normalize=True)
-    la.fit(X_train , y_train)
-    accuracies = cross_val_score(estimator = la, X = X_train, y = y_train, cv = 5,verbose = 1)
-    y_pred = la.predict(X_test)
-    print('')
-    print('###### Lasso Regression ######')
-    print('Score : %.4f' % la.score(X_test, y_test))
-    print(accuracies)
-
-    mse = mean_squared_error(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    rmse = mean_squared_error(y_test, y_pred)**0.5
-    r2 = r2_score(y_test, y_pred)
-    rmspe = rmspe_score(y_test, y_pred)
-
-    print('')
-    print('MSE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mse)
-    print('MAE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mae)
-    print('RMSE  - Conjunto de dados {}'.format(data),' : %0.2f ' % rmse)
-    print('R2    - Conjunto de dados {}'.format(data),' : %0.2f ' % r2)
-    print('RMSPE - Conjunto de dados {}'.format(data),' : %0.2f ' % rmspe)
-    
-    if data == 1:
-        R2_Scores_1.append(r2)
-    else:        
-        R2_Scores_2.append(r2)
+get_ipython().run_cell_magic('time', '', "\nlar = Lasso(normalize = True)\nmodel_analysis(X_train, X_test, y_train, y_test, lar, 'Lasso Regression')")
 
 
 # In[56]:
 
 
-# Treinando lasso para o primeiro conjunto de dados
-
-train_la(X_train_1, y_train_1, X_test_1, y_test_1, data = 1)
+get_ipython().run_cell_magic('time', '', "\nrr = Ridge(normalize = True)\nmodel_analysis(X_train, X_test, y_train, y_test, rr, 'Ridge Regression')")
 
 
 # In[57]:
 
 
-# Treinando lasso para o segundo conjunto de dados
-
-train_la(X_train_2, y_train_2, X_test_2, y_test_2, data = 2)
-
-
-# #### AdaBoost
-
-# In[58]:
-
-
-def train_ar(X_train, y_train, X_test, y_test, data):
-    ar = AdaBoostRegressor(n_estimators=1000)
-    ar.fit(X_train , y_train)
-    accuracies = cross_val_score(estimator = ar, X = X_train, y = y_train, cv = 5,verbose = 1)
-    y_pred = ar.predict(X_test)
-    print('')
-    print('###### AdaBoost Regression ######')
-    print('Score : %.4f' % ar.score(X_test, y_test))
-    print(accuracies)
-
-    mse = mean_squared_error(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    rmse = mean_squared_error(y_test, y_pred)**0.5
-    r2 = r2_score(y_test, y_pred)
-    rmspe = rmspe_score(y_test, y_pred)
-
-    print('')
-    print('MSE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mse)
-    print('MAE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mae)
-    print('RMSE  - Conjunto de dados {}'.format(data),' : %0.2f ' % rmse)
-    print('R2    - Conjunto de dados {}'.format(data),' : %0.2f ' % r2)
-    print('RMSPE - Conjunto de dados {}'.format(data),' : %0.2f ' % rmspe)
-
-
-# In[59]:
-
-
-# Treinando adaboost para o primeiro conjunto de dados
-
-train_ar(X_train_1, y_train_1, X_test_1, y_test_1, data = 1)
-
-
-# In[60]:
-
-
-# Treinando adaboost para o segundo conjunto de dados
-
-train_ar(X_train_2, y_train_2, X_test_2, y_test_2, data = 2)
-
-
-# #### Random Forest
-
-# In[61]:
-
-
-def train_rf(X_train, y_train, X_test, y_test, data):
-    rf = RandomForestRegressor(random_state = 2)
-    rf.fit(X_train , y_train)
-    accuracies = cross_val_score(estimator = rf, X = X_train, y = y_train, cv = 5,verbose = 1)
-    y_pred = rf.predict(X_test)
-    print('')
-    print('###### Random Forest ######')
-    print('Score : %.4f' % rf.score(X_test, y_test))
-    print(accuracies)
-
-    mse = mean_squared_error(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    rmse = mean_squared_error(y_test, y_pred)**0.5
-    r2 = r2_score(y_test, y_pred)
-    rmspe = rmspe_score(y_test, y_pred)
-
-    print('')
-    print('MSE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mse)
-    print('MAE   - Conjunto de dados {}'.format(data),' : %0.2f ' % mae)
-    print('RMSE  - Conjunto de dados {}'.format(data),' : %0.2f ' % rmse)
-    print('R2    - Conjunto de dados {}'.format(data),' : %0.4f ' % r2)
-    print('RMSPE - Conjunto de dados {}'.format(data),' : %0.4f ' % rmspe)
-
-
-# In[62]:
-
-
-# Treinando random forest para o primeiro conjunto de dados
-
-train_rf(X_train_1, y_train_1, X_test_1, y_test_1, data = 1)
+get_ipython().run_cell_magic('time', '', "\nabr = AdaBoostRegressor(random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, abr, 'AdaBoost Regression')")
 
 
 # In[63]:
 
 
-# Treinando random forest para o segundo conjunto de dados
-
-train_rf(X_train_2, y_train_2, X_test_2, y_test_2, data = 2)
+get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(n_estimators = 200, min_samples_leaf = 2, min_samples_split = 5, \\\n                                max_depth = 10, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, gbr, 'Gradient Boosting Regression')")
 
 
 # In[64]:
 
 
-x = train_2.drop(['price'], axis = 1)
-y = train_2['price']
+get_ipython().run_cell_magic('time', '', "\nrfr = RandomForestRegressor(n_estimators = 250, n_jobs = 2, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, rfr, 'Random Forest Regression')")
 
-rf = RandomForestRegressor(random_state = 2)
-rf.fit(x, y)
-y_pred = rf.predict(test_2)
 
-submission = pd.DataFrame({'id':test_2.index, 'price':y_pred})
+# In[65]:
+
+
+get_ipython().run_cell_magic('time', '', "\netr = ExtraTreesRegressor(n_estimators = 1000, n_jobs = -1, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, etr, 'Extra Trees Regression')")
+
+
+# In[66]:
+
+
+compare = pd.DataFrame()
+compare['Model'] = model_dict.keys()
+compare['RMSPE'] = model_dict.values()
+
+compare = compare.set_index('Model').sort_values(['RMSPE'])
+compare
+
+
+# In[ ]:
+
+
+# Modelo com menor RMSPE eh escolhido
+x = train.drop(['price'], axis = 1)
+y = train['price']
+
+gbr = GradientBoostingRegressor(n_estimators = 250, min_samples_leaf = 2, min_samples_split = 5,                                 max_depth = 10, random_state = 152)
+gbr.fit(x, y)
+y_pred = gbr.predict(test)
+
+submission = pd.DataFrame({'id':test.index, 'price':y_pred})
 submission.head()
 
-submission.to_csv('data/submission.csv', index = False)
+# submission.to_csv('data/submission.csv', index = False)
 
 
 # In[ ]:
