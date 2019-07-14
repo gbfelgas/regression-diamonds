@@ -10,7 +10,7 @@
 
 # # Introdução
 
-# Este trabalho tem como objetivo desenvolver um modelo de regressão para estimar os preços de diamantes a partir de características específicas dadas. Para realizá-lo, foram disponibilizados um conjunto de dados de treino, com alvo, e um conjunto de dados de teste, cujo alvo deve ser estimado pela aluna, além de um modelo do arquivo a ser submetido à competição.
+# Este trabalho tem como objetivo desenvolver um modelo de regressão para estimar os preços de diamantes a partir de características específicas. Para realizá-lo, foram disponibilizados um conjunto de dados de treino, com alvo, e um conjunto de dados de teste, cujo alvo deve ser estimado, além de um modelo do arquivo a ser submetido à competição.
 # 
 # Cada atributo do conjunto de dados está descrito abaixo:
 # 
@@ -54,7 +54,7 @@
 # - **Visualização de dados:** Matplotlib e Seaborn;
 # - **Modelos de treinamento, ferramentas e métricas:** Scikit-learn.
 
-# In[188]:
+# In[1]:
 
 
 # Importando as bibliotecas e setando o ambiente de desenvolvimento
@@ -69,20 +69,20 @@ import seaborn as sns
 
 # Bibliotecas dos modelos de treinamento
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor, ExtraTreesRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor,                              AdaBoostRegressor, ExtraTreesRegressor
 
 # Bibliotecas de ferramentas e métricas
-from sklearn.model_selection import train_test_split, RandomizedSearchCV, GridSearchCV, cross_val_score, cross_validate
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, make_scorer
+from sklearn.model_selection import train_test_split, RandomizedSearchCV,                                     GridSearchCV, cross_val_score, cross_validate
+from sklearn.metrics import mean_squared_error, r2_score,                             mean_absolute_error, make_scorer
 
 
 # # Mineração e Análise de Dados
 
-# A seguir, segue o passo a passo para analisar e tratar o conjunto de dados de acordo com as observações.
+# A seguir, demonstra-se o passo a passo para analisar e tratar o conjunto de dados de acordo com as observações.
 
 # ### Carregando Conjunto de Treino
 
-# In[189]:
+# In[2]:
 
 
 # Carregando os dados de treino como dataframe
@@ -91,21 +91,21 @@ train = pd.read_csv('data/train.csv')
 train.head()
 
 
-# In[190]:
+# In[3]:
 
 
 # Verificando tamanho do dataframe
 train.shape
 
 
-# In[191]:
+# In[4]:
 
 
 # Verificando informacoes especificas
 train.info()
 
 
-# In[192]:
+# In[5]:
 
 
 # Setando o index do arquivo como index do dataframe
@@ -113,14 +113,14 @@ train = train.set_index('id')
 train.head()
 
 
-# In[193]:
+# In[6]:
 
 
 # Verificando se existem valores nulos para o conjunto de treino
 train.isnull().sum()
 
 
-# In[194]:
+# In[7]:
 
 
 # Verificando os detalhes de cada caracteristica
@@ -129,22 +129,23 @@ train.describe()
 
 # Como x, y e z são variáveis relacionadas às dimensões de cada diamante, não faz sentido que nenhuma delas seja igual a 0. Assim, é necessário retirar estes dados do conjunto de treino para que o modelo não seja prejudicado.
 
-# In[195]:
+# In[8]:
 
 
-# Para realizar este processamento, redefine-se o conjunto de treino
-# como todos os dados em que x, y e z sao diferentes de 0
+# Para realizar este processamento, redefine-se o conjunto
+# de treino como todos os dados em que x, y e z sao
+# diferentes de 0
 train = train[(train[['x','y','z']] != 0).all(axis=1)]
 
 # Para confirmar
 train.describe()
 
 
-# Como pode ser observado, agora, o conjunto de treino não possui mais x, y e z zerados, o que se confirma pelos valores encontrados na linha de mínimos de cada um desses atributos acima.
+# Como pode ser observado na tabela acima, após a remoção de zeros, o conjunto de treino apresenta valores mínimos de x, y e z acima de zero, tornando-se coerente com a aplicação.
 
 # ### Carregando Conjunto de Teste
 
-# In[196]:
+# In[9]:
 
 
 # Carregando os dados de teste como dataframe
@@ -152,19 +153,19 @@ test = pd.read_csv('data/test.csv')
 test.head()
 
 
-# In[197]:
+# In[10]:
 
 
 test.shape
 
 
-# In[198]:
+# In[11]:
 
 
 test.info()
 
 
-# In[199]:
+# In[12]:
 
 
 # Setando o index do arquivo como index do dataframe
@@ -172,14 +173,14 @@ test = test.set_index('id')
 test.head()
 
 
-# In[200]:
+# In[13]:
 
 
 # Verificando se existem valores nulos para o conjunto de teste
 test.isnull().sum()
 
 
-# In[201]:
+# In[14]:
 
 
 # Verificando os detalhes de cada caracteristica
@@ -190,10 +191,11 @@ test.describe()
 
 # ### Tratamento de Dados
 
-# In[202]:
+# In[15]:
 
 
-# Cria-se a matriz de correlacao entre os atributos numericos para visualizacao inicial
+# Cria-se a matriz de correlacao entre os atributos
+# numericos para visualizacao inicial
 corr_matrix = train.corr()
 
 plt.subplots(figsize = (10, 10))
@@ -203,18 +205,19 @@ plt.show()
 
 # A matriz de correlação acima possui apenas os atributos numéricos do conjunto de dados, excluindo as características categóricas descritas anteriormente.  
 # 
-# A partir deste gráfico, é possível observar que **carat, x, y e z** são os atributos de maior correlação com o preço e, fatalmente, maior correlação entre si também, já que descrevem características extremamente dependentes umas das outras, como peso, comprimento, largura e profundidade.
+# A partir deste gráfico, é possível observar que **carat, x, y e z** são os atributos de maior correlação com o preço e, consequentemente, maior correlação entre si, já que descrevem características dependentes umas das outras, como peso, comprimento, largura e profundidade.
 
-# Define-se, então, uma função de análise, para verificar a relação de assimetria e curtose na distribuição de cada atributo numérico e para observar seu histograma e diagrama de dispersão em relação ao preço, e uma função de contagem de dados até determinados limiares, configurados manualmente de acordo com o histograma.
+# Define-se, então, uma função de análise, para verificar a relação de assimetria e curtose na distribuição de cada atributo numérico e para observar seu histograma, diagrama de dispersão em relação ao preço e uma função de contagem de dados até determinados limiares, configurados manualmente de acordo com o histograma.
 
-# In[203]:
+# In[16]:
 
 
 # Funcao de analise de atributo
 def analysis(feature, hist=True):
     
-    # Definindo os valores de Skewness e Kurtosis para analisar
-    # a simetria e quantidade de outliers respectivamente
+    # Definindo os valores de Skewness e Kurtosis
+    # para analisar a simetria e quantidade de
+    # outliers respectivamente
     print('Skewness: {}'.format(train[feature].skew()))
     print('Kurtosis: {}'.format(train[feature].kurt()))
 
@@ -238,26 +241,26 @@ def count_limit(feature, inf_limit, sup_limit, hop):
     p = np.zeros(((n + 1), 2))
     
     for i in range(n + 1):
-        p[i][0] = train[train[feature] < (inf_limit + (hop * i))][feature].count()
-        p[i][1] = np.round((p[i][0] / train[train[feature] < sup_limit][feature].count()) * 100, 2)
-        print('Quantidade de pontos abaixo de {} :'.format(inf_limit + (hop * i)), p[i][0],               'Porcentagem: {} %'.format(p[i][1]))
+        p[i][0] = train[train[feature] <                         (inf_limit + (hop * i))][feature].count()
+        p[i][1] = np.round((p[i][0] /                             train[train[feature] <                                   sup_limit][feature].count()) * 100, 2)
+        print('Pontos abaixo de {} :'.format(inf_limit + (hop * i)), p[i][0],               'Porcentagem: {} %'.format(p[i][1]))
 
 
 # #### Preço
 
-# In[204]:
+# In[17]:
 
 
 train['price'].describe()
 
 
-# In[205]:
+# In[18]:
 
 
 analysis('price')
 
 
-# In[206]:
+# In[19]:
 
 
 count_limit('price', 2500, 20000, 2500)
@@ -269,19 +272,19 @@ count_limit('price', 2500, 20000, 2500)
 
 # #### Carat
 
-# In[207]:
+# In[20]:
 
 
 train['carat'].describe()
 
 
-# In[208]:
+# In[21]:
 
 
 analysis('carat')
 
 
-# In[209]:
+# In[22]:
 
 
 count_limit('carat', 0.5, 3, 0.5)
@@ -289,10 +292,9 @@ count_limit('carat', 0.5, 3, 0.5)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **carat** abaixo de 2.4, por exemplo. Além disso, é importante observar o comportamento espaçado do atributo, assumindo conjuntos de valores a partir de determinadas "linhas bem definidas".  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **carat** acima de 2.4. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[210]:
+# In[23]:
 
 
 # train = train[train['carat'] < 2.4]
@@ -302,19 +304,19 @@ count_limit('carat', 0.5, 3, 0.5)
 
 # #### x
 
-# In[211]:
+# In[24]:
 
 
 train['x'].describe()
 
 
-# In[212]:
+# In[25]:
 
 
 analysis('x')
 
 
-# In[213]:
+# In[26]:
 
 
 count_limit('x', 4, 9, 1)
@@ -322,10 +324,9 @@ count_limit('x', 4, 9, 1)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **x** abaixo de 9, por exemplo.  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **x** acima de 9. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[214]:
+# In[27]:
 
 
 # train = train[train['x'] < 9]
@@ -335,19 +336,19 @@ count_limit('x', 4, 9, 1)
 
 # #### y
 
-# In[215]:
+# In[28]:
 
 
 train['y'].describe()
 
 
-# In[216]:
+# In[29]:
 
 
 analysis('y')
 
 
-# In[217]:
+# In[30]:
 
 
 count_limit('y', 5, 35, 5)
@@ -355,10 +356,9 @@ count_limit('y', 5, 35, 5)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **y** abaixo de 10, por exemplo.  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **y** acima de 10. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[218]:
+# In[31]:
 
 
 # train = train[train['y'] < 10]
@@ -368,19 +368,19 @@ count_limit('y', 5, 35, 5)
 
 # #### z
 
-# In[219]:
+# In[32]:
 
 
 train['z'].describe()
 
 
-# In[220]:
+# In[33]:
 
 
 analysis('z')
 
 
-# In[221]:
+# In[34]:
 
 
 count_limit('z', 1, 6, 0.5)
@@ -388,10 +388,9 @@ count_limit('z', 1, 6, 0.5)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **z** acima de 2.2 e abaixo de 5.4, por exemplo.  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **z** abaixo de 2.2 e acima de 5.4. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[222]:
+# In[35]:
 
 
 # train = train[train['z'] > 2.2]
@@ -402,19 +401,19 @@ count_limit('z', 1, 6, 0.5)
 
 # #### depth
 
-# In[223]:
+# In[36]:
 
 
 train['depth'].describe()
 
 
-# In[224]:
+# In[37]:
 
 
 analysis('depth')
 
 
-# In[225]:
+# In[38]:
 
 
 count_limit('depth', 45, 80, 5)
@@ -422,10 +421,9 @@ count_limit('depth', 45, 80, 5)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **depth** acima de 56 e abaixo de 67, por exemplo.  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **depth** abaixo de 56 e acima de 67. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[226]:
+# In[39]:
 
 
 # train = train[train['depth'] > 56]
@@ -436,19 +434,19 @@ count_limit('depth', 45, 80, 5)
 
 # #### table
 
-# In[227]:
+# In[40]:
 
 
 train['table'].describe()
 
 
-# In[228]:
+# In[41]:
 
 
 analysis('table')
 
 
-# In[229]:
+# In[42]:
 
 
 count_limit('table', 45, 75, 5)
@@ -456,10 +454,9 @@ count_limit('table', 45, 75, 5)
 
 # ##### Removendo os Outliers
 
-# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **table** acima de 56 e abaixo de 67, por exemplo.  
-# O modelo foi testado considerando a remoção deste dados, porém, apresentou melhores resultados considerando todos os casos, por isso, o código abaixo se encontra comentado.
+# De acordo com a observação do gráfico acima e da quantidade de dados acumulados, os outliers poderiam ser considerados com **table** abaixo de 56 e acima de 67. Porém, ao testar o modelo com a remoção deste dados, houve piora no desempenho geral, por isso, durante os testes finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
-# In[230]:
+# In[43]:
 
 
 # train = train[train['table'] > 56]
@@ -472,7 +469,7 @@ count_limit('table', 45, 75, 5)
 
 # Para visualizar todos os atributos numéricos e as relações entre eles, plotam-se vários gráficos de dispersão para evidenciar as dependências possíveis e, novamente, a matriz de correlações, para analisar a remoção de outliers caso ela seja aplicada.
 
-# In[231]:
+# In[44]:
 
 
 # Criando os graficos de dispersao para visualizacao geral
@@ -480,7 +477,7 @@ count_limit('table', 45, 75, 5)
 sns.pairplot(train)
 
 
-# In[232]:
+# In[45]:
 
 
 # Cria a matriz de correlacao entre os atributos numericos
@@ -495,7 +492,7 @@ plt.show()
 
 # Para tratar os atributos categóricos, observou-se, inicialmente, a relação de cada uma das categorias com o preço e o tamanho da variância desta estimativa média.
 
-# In[233]:
+# In[46]:
 
 
 # Relacionando os atributos literais ao preco, com visualizacao
@@ -523,29 +520,55 @@ plt.show()
 # 
 # As duas últimas opções foram escolhidas pois apresentaram melhores resultados e podem ser observadas abaixo:
 
-# In[234]:
+# In[47]:
 
 
 # Numeros inteiros de 1 a numero de categorias do atributo
 # Valores escolhidos de acordo com observacao dos graficos
 
 # cut
-train['cut'] = train['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5})
-test['cut']  = test['cut'].replace({'Ideal': 1, 'Good': 2, 'Very Good': 3, 'Fair': 4, 'Premium': 5})
+cut_dict = {'Ideal'    : 1,
+            'Good'     : 2,
+            'Very Good': 3,
+            'Fair'     : 4,
+            'Premium'  : 5}
+
+train['cut'] = train['cut'].replace(cut_dict)
+test['cut']  = test['cut'].replace(cut_dict)
+
 
 # color
-train['color'] = train['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7})
-test['color']  = test['color'].replace({'E': 1, 'D': 2, 'F': 3, 'G': 4, 'H': 5, 'I': 6, 'J': 7})
+color_dict = {'E': 1,
+              'D': 2,
+              'F': 3,
+              'G': 4,
+              'H': 5,
+              'I': 6,
+              'J': 7}
+
+train['color'] = train['color'].replace(color_dict)
+test['color']  = test['color'].replace(color_dict)
+
 
 # clarity
-train['clarity'] = train['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                              'SI1': 6, 'I1': 7, 'SI2': 8})
-test['clarity']  = test['clarity'].replace({'VVS1': 1, 'IF': 2, 'VVS2': 3, 'VS1': 4, 'VS2': 5,                                             'SI1': 6, 'I1': 7, 'SI2': 8})
+clarity_dict = {'VVS1': 1,
+                'IF'  : 2,
+                'VVS2': 3,
+                'VS1' : 4,
+                'VS2' : 5,
+                'SI1' : 6,
+                'I1'  : 7,
+                'SI2' : 8}
+
+train['clarity'] = train['clarity'].replace(clarity_dict)
+test['clarity']  = test['clarity'].replace(clarity_dict)
+
 
 # Visualizando teste para checar funcionamento
 test.head()
 
 
-# In[235]:
+# In[48]:
 
 
 # # Funcao de transformacao dos atributos categoricos
@@ -553,38 +576,43 @@ test.head()
 
 # def categ_feature(feature, data):
 #     mean = train.groupby(feature)['price'].mean()
-#     mean_sort = mean.reset_index().sort_values(['price']).set_index([feature]).astype(int)
+#     mean_sort = mean.reset_index().sort_values(['price']).\
+#                 set_index([feature]).astype(int)
     
 #     mean_sort.to_dict()
 #     mean_sort = mean_sort['price']
     
-#     data[feature] = data[feature].replace(mean_sort, inplace = False)
+#     data[feature] = data[feature].replace(mean_sort, \
+#                                           inplace = False)
     
 #     return mean_sort, data
 
 
-# In[236]:
+# In[49]:
 
 
 # # Aplicando a funcao para os dados de treino e teste
 
 # # cut
 # mean_sort_cut, train = categ_feature('cut', train)
-# test['cut'] = test['cut'].replace(mean_sort_cut, inplace = False)
+# test['cut'] = test['cut'].replace(mean_sort_cut, \
+#                                   inplace = False)
 
 # #color
 # mean_sort_color, train = categ_feature('color', train)
-# test['color'] = test['color'].replace(mean_sort_color, inplace = False)
+# test['color'] = test['color'].replace(mean_sort_color, \
+#                                       inplace = False)
 
 # #clarity
 # mean_sort_clarity, train = categ_feature('clarity', train)
-# test['clarity'] = test['clarity'].replace(mean_sort_clarity, inplace = False)
+# test['clarity'] = test['clarity'].replace(mean_sort_clarity, \
+#                                           inplace = False)
 
 # # Visualizando teste para checar funcionamento
 # test.head()
 
 
-# In[237]:
+# In[50]:
 
 
 # Criando a matriz de correlacao novamente para analise
@@ -604,29 +632,36 @@ plt.show()
 # Após aplicar todos os tratamentos e entender como cada atributo interage com o alvo, é necessário dividir o conjunto de treino em dois, um de treino e um de pseudo-teste, a fim de avaliar o comportamento de cada modelo para verificar qual é a melhor escolha para a aplicação em questão.  
 # É importante ressaltar que, para realizar esta separação, o conjunto de treino deve ser previamente separado em duas partes específicas: x, com todos os atributos, e y, com o alvo, como pode ser observado abaixo.
 
-# In[238]:
+# In[51]:
 
 
-# Criando o conjunto de treino e de teste para treinar o modelo a partir de train modificado
+# Separando alvo e atributos
 x = train.drop(['price'], axis = 1)
 y = train['price']
 
-# Criacao de conjuntos de treino e pseudo-teste a partir do conjunto geral de treino
-X_train, X_test, y_train, y_test = train_test_split(x, y, random_state = 2, test_size=0.3)
+# Criacao de conjuntos de treino e pseudo-teste
+# a partir do conjunto geral de treino
+X_train, X_test, y_train, y_test = train_test_split(x, y,                                    random_state = 2, test_size=0.3)
 
 
 # Cria-se, adicionalmente, um dicionário de comparação que irá armazenar todos os RMSPE analisados durante os próximos passos. Este dicionário servirá para demonstrar o modelo que gerou o melhor resultado.  
 # 
 # Além dele, criam-se também duas funções, uma responsável pelo cálculo do RMSPE, já que esta métrica não estava disponível nos modelos utilizados, e uma responsável pela análise de cada modelo, capaz de gerar o treinamento, predição e calcular as métricas de cada caso.
 
-# In[239]:
+# In[52]:
 
 
 # Arrays de referência para comparação entre modelos
-model_dict = {'Linear Regressor': 1, 'Lasso Regression': 1, 'Ridge Regression': 1, 'AdaBoost Regression': 1,             'Gradient Boosting Regression': 1, 'Random Forest Regression': 1, 'Extra Trees Regression': 1}
+model_dict = {'Linear Regressor': 1,
+              'Lasso Regression': 1,
+              'Ridge Regression': 1,
+              'AdaBoost Regression': 1,
+              'Gradient Boosting Regression': 1,
+              'Random Forest Regression': 1,
+              'Extra Trees Regression': 1}
 
 
-# In[240]:
+# In[53]:
 
 
 # Função que calcula o RMSPE para validacao dos modelos
@@ -637,7 +672,7 @@ def rmspe_score(y_test, y_pred):
     return rmspe
 
 
-# In[241]:
+# In[54]:
 
 
 # Funcao de regressao generica, para varios modelos diferentes
@@ -666,11 +701,11 @@ def model_analysis(X_train, X_test, y_train, y_test, regressor, name):
 
 # ## Modelos Testados
 
-# A partir da preparação do ambiente, aplicam-se os mesmos dados para todos os regressores abaixo, comparando os scores e todas as métricas de erros. A métrica mais importante para este caso é o RMSPE, já que o mesmo é o que será considerado como avaliador durante a competição.
+# A partir da preparação do ambiente, aplicam-se os mesmos dados para todos os regressores abaixo, comparando os scores e todas as métricas de erros. A métrica mais importante para este caso é o RMSPE, já que é considerada como avaliador durante a competição.
 
 # ### Linear Regression
 
-# In[242]:
+# In[55]:
 
 
 get_ipython().run_cell_magic('time', '', "\nlr = LinearRegression()\nmodel_analysis(X_train, X_test, y_train, y_test, lr, 'Linear Regressor')")
@@ -678,7 +713,7 @@ get_ipython().run_cell_magic('time', '', "\nlr = LinearRegression()\nmodel_analy
 
 # ### Lasso Regression
 
-# In[243]:
+# In[56]:
 
 
 get_ipython().run_cell_magic('time', '', "\nlar = Lasso(normalize = True)\nmodel_analysis(X_train, X_test, y_train, y_test, lar, 'Lasso Regression')")
@@ -686,7 +721,7 @@ get_ipython().run_cell_magic('time', '', "\nlar = Lasso(normalize = True)\nmodel
 
 # ### Ridge Regression
 
-# In[244]:
+# In[57]:
 
 
 get_ipython().run_cell_magic('time', '', "\nrr = Ridge(normalize = True)\nmodel_analysis(X_train, X_test, y_train, y_test, rr, 'Ridge Regression')")
@@ -694,7 +729,7 @@ get_ipython().run_cell_magic('time', '', "\nrr = Ridge(normalize = True)\nmodel_
 
 # ### AdaBoost Regression
 
-# In[245]:
+# In[58]:
 
 
 get_ipython().run_cell_magic('time', '', "\nabr = AdaBoostRegressor(random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, abr, 'AdaBoost Regression')")
@@ -702,15 +737,15 @@ get_ipython().run_cell_magic('time', '', "\nabr = AdaBoostRegressor(random_state
 
 # ### Gradiente Boosting Regression
 
-# In[246]:
+# In[59]:
 
 
-get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(n_estimators = 200, min_samples_leaf = 2, min_samples_split = 5, \\\n                                max_depth = 10, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, gbr, 'Gradient Boosting Regression')")
+get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(n_estimators = 200, min_samples_leaf = 2, \\\n                                min_samples_split = 5, \\\n                                max_depth = 10, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, gbr, 'Gradient Boosting Regression')")
 
 
 # ### Random Forest Regression
 
-# In[247]:
+# In[60]:
 
 
 get_ipython().run_cell_magic('time', '', "\nrfr = RandomForestRegressor(n_estimators = 250, n_jobs = 2, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, rfr, 'Random Forest Regression')")
@@ -718,7 +753,7 @@ get_ipython().run_cell_magic('time', '', "\nrfr = RandomForestRegressor(n_estima
 
 # ### Extra Trees Regression
 
-# In[248]:
+# In[61]:
 
 
 get_ipython().run_cell_magic('time', '', "\netr = ExtraTreesRegressor(n_estimators = 1000, n_jobs = -1, random_state = 2)\nmodel_analysis(X_train, X_test, y_train, y_test, etr, 'Extra Trees Regression')")
@@ -726,7 +761,7 @@ get_ipython().run_cell_magic('time', '', "\netr = ExtraTreesRegressor(n_estimato
 
 # ### Comparação
 
-# In[249]:
+# In[62]:
 
 
 compare = pd.DataFrame()
@@ -747,7 +782,7 @@ compare
 
 # ### Random Search
 
-# In[250]:
+# In[63]:
 
 
 # Definindo a grid para aplicar RandomizedSearchCV
@@ -768,7 +803,7 @@ random_grid = {'n_estimators': n_estimators,
                'random_state': random_state,
                'learning_rate': learning_rate}
 
-print(random_grid)
+random_grid
 
 
 # In[62]:
@@ -785,7 +820,8 @@ gbr_rs = RandomizedSearchCV(estimator = gbr,
                             verbose = 2, 
                             random_state = 2, 
                             n_jobs = -1,
-                            scoring = make_scorer(rmspe_score, greater_is_better = False)
+                            scoring = make_scorer(rmspe_score, \
+                                                  greater_is_better = False)
 )
 
 # Treina o modelo com 100 possibilidades aleatorias dentro do conjunto
@@ -825,7 +861,8 @@ gbr_grid = GridSearchCV(estimator = gbr,
                         cv = 3,
                         verbose = 2,
                         n_jobs = -1,
-                        scoring = make_scorer(rmspe_score, greater_is_better = False)
+                        scoring = make_scorer(rmspe_score, \
+                                              greater_is_better = False)
 )
 
 # Treina o modelo com todas as combinacoes
@@ -845,10 +882,10 @@ gbr_grid.best_params_
 
 # #### Avaliação do Modelo
 
-# In[255]:
+# In[64]:
 
 
-get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(learning_rate = 0.04, max_depth = 10, max_features = 8, \\\n                                min_samples_leaf = 6, min_samples_split = 2, n_estimators = 500, \\\n                                random_state = 2)\n\nmodel_analysis(X_train, X_test, y_train, y_test, gbr, 'Gradient Boosting Regression')")
+get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(learning_rate = 0.02, max_depth = 10, \\\n                                max_features = 7, \\\n                                min_samples_leaf = 2, min_samples_split = 5, \\\n                                n_estimators = 1000, random_state = 2)\n\nmodel_analysis(X_train, X_test, y_train, y_test, gbr, 'Gradient Boosting Regression')")
 
 
 # #### Arquivo Submetido
@@ -856,12 +893,12 @@ get_ipython().run_cell_magic('time', '', "\ngbr = GradientBoostingRegressor(lear
 # In[256]:
 
 
-get_ipython().run_cell_magic('time', '', "x = train.drop(['price'], axis = 1)\ny = train['price']\n\ngbr = GradientBoostingRegressor(learning_rate = 0.04, max_depth = 10, max_features = 8, \\\n                                min_samples_leaf = 6, min_samples_split = 2, n_estimators = 500, \\\n                                random_state = 2)\n\ngbr.fit(x, y)\ny_pred = gbr.predict(test)\n\nsubmission = pd.DataFrame({'id':test.index, 'price':y_pred})\n\nsubmission.to_csv('data/submission.csv', index = False)")
+get_ipython().run_cell_magic('time', '', "x = train.drop(['price'], axis = 1)\ny = train['price']\n\ngbr = GradientBoostingRegressor(learning_rate = 0.02, max_depth = 10, \\\n                                max_features = 7, \\\n                                min_samples_leaf = 2, min_samples_split = 5, \\\n                                n_estimators = 1000, random_state = 2)\n\ngbr.fit(x, y)\ny_pred = gbr.predict(test)\n\nsubmission = pd.DataFrame({'id':test.index, 'price':y_pred})\n\nsubmission.to_csv('data/submission.csv', index = False)")
 
 
 # # Conclusão
 
-# O trabalho foi de extrema importância para o desenvolvimento do conhecimento da autora sobre o assunto e gerou motivação para a realização de um bom modelo. Com o aprendizado obtido a partir dele, foi possível conceber novas ideias de Aprendizado de Máquina e definir métricas de melhoria para trabalhos futuros, onde se verificariam a robustez e capacidade de generalização do modelo de forma ainda mais específica, utilizando métricas de verificação da variação durante a validação cruzada, etc.  
+# O trabalho foi de extrema importância para desenvolver o conhecimento sobre o assunto e gerou motivação para a realização de um bom modelo. Com o aprendizado obtido a partir dele, foi possível conceber novas ideias de Aprendizado de Máquina e definir métricas de melhoria para trabalhos futuros, onde se verificariam a robustez e capacidade de generalização do modelo de forma ainda mais específica, utilizando métricas de verificação da variação durante a validação cruzada, etc.  
 # 
 # O resultado obtido pelo código da maneira como ele se encontra, porém, não foi o melhor de todos. Durante alguns dos testes, a autora trocou os parâmetros de *min_samples_leaf* e *min_samples_split* erroneamente e, nestas condições, o modelo apresentou o melhor resultado possível e conseguiu atingir o primeiro lugar, público e privado, na competição (na primeira data de término, às 0h de 13/07). Porém, como ele foi gerado por uma confusão e não estava de acordo com a lógica desenvolvida, preferiu-se removê-lo deste relatório e das submissões consideradas pela avaliação privada.  
 # 

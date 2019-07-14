@@ -66,6 +66,7 @@
     \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
                                 % normalem makes italics be italics, not underlines
     \usepackage{mathrsfs}
+    \usepackage[brazilian]{babel}
     
 
     
@@ -149,7 +150,8 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \title{regression-diamonds}
+    \title{\textbf{Trabalho 1\\
+                   Regressão Multivariável}}
     
     
     
@@ -287,20 +289,12 @@
     
     \maketitle
     
-    
-
-    
-    \hypertarget{trabalho-1---regressuxe3o-multivariuxe1vel}{%
-\section{Trabalho 1 - Regressão
-Multivariável}\label{trabalho-1---regressuxe3o-multivariuxe1vel}}
-
-\hypertarget{estimativa-de-preuxe7os-de-diamantes-de-acordo-com-suas-caracteruxedsticas.}{%
-\section{Estimativa de preços de diamantes de acordo com suas
-características.}\label{estimativa-de-preuxe7os-de-diamantes-de-acordo-com-suas-caracteruxedsticas.}}
-
-UFRJ/POLI/DEL - Introdução ao Aprendizado de Máquina (EEL891)\\
-Prof.~Heraldo Almeira - Julho de 2019 Maria Gabriella Andrade Felgas
-(DRE: 111471809)
+    \begin{flushleft}
+    Disciplina: Introdução ao Aprendizado de Máquina (EEL891)\\
+    Professor: Heraldo Almeida\\
+    Aluna: Maria Gabriella Andrade Felgas (DRE: 111471809)\\
+    DEL/UFRJ, 2019.1
+    \end{flushleft}
 
     \hypertarget{introduuxe7uxe3o}{%
 \section{Introdução}\label{introduuxe7uxe3o}}
@@ -321,32 +315,48 @@ Cada atributo do conjunto de dados está descrito abaixo:
   \textbf{carat}: Peso em quilates (1 quilate = 0,2 g);
 \item
   \textbf{cut}: Qualidade da lapidação, em uma escala categórica ordinal
-  com os seguinte valores: \textgreater{}- \textbf{``Fair''} = Aceitável
-  (classificação de menor valor); \textgreater{}- \textbf{``Good''} =
-  Boa; \textgreater{}- \textbf{``Very Good''} = Muito boa;
-  \textgreater{}- \textbf{``Premium''} = Excelente; \textgreater{}-
-  \textbf{``Ideal''} = Perfeita (classificação de maior valor).
+  com os seguinte valores:
+  \begin{itemize}
+      \item \textbf{``Fair''} = Aceitável
+      (classificação de menor valor);
+      \item \textbf{``Good''} =
+      Boa;
+      \item \textbf{``Very Good''} = Muito boa;
+      \item \textbf{``Premium''} = Excelente;
+      \item \textbf{``Ideal''} = Perfeita (classificação de maior valor).
+  \end{itemize}
 \item
   \textbf{color}: Cor, em uma escala categórica ordinal com os seguintes
-  valores: \textgreater{}- \textbf{``D''} = Excepcionalmente incolor
-  extra (classificação de maior valor); \textgreater{}- \textbf{``E''} =
-  Excepcionalmente incolor; \textgreater{}- \textbf{``F''} =
-  Perfeitamente incolor; \textgreater{}- \textbf{``G''} = Nitidamente
-  incolor; \textgreater{}- \textbf{``H''} = Incolor; \textgreater{}-
-  \textbf{``I''} = Cor levemente perceptível; \textgreater{}-
-  \textbf{``J''} = Cor perceptível (classificação de menor valor).
+  valores:
+  \begin{itemize}
+      \item \textbf{``D''} = Excepcionalmente incolor
+      extra (classificação de maior valor);
+      \item \textbf{``E''} =
+      Excepcionalmente incolor;
+      \item \textbf{``F''} =
+      Perfeitamente incolor;
+      \item \textbf{``G''} = Nitidamente
+      incolor;
+      \item \textbf{``H''} = Incolor;
+      \item \textbf{``I''} = Cor levemente perceptível;
+      \item \textbf{``J''} = Cor perceptível (classificação de menor valor).
+  \end{itemize}
 \item
   \textbf{clarity}: Pureza, em uma escala categórica ordinal com os
-  seguintes valores: \textgreater{}- \textbf{``I1''} = Inclusões
+  seguintes valores:
+  \begin{itemize}
+      \item \textbf{``I1''} = Inclusões
   evidentes com lupa de 10x (classificação de menor valor);
-  \textgreater{}- \textbf{``SI2''} e \textbf{``SI1''} = Inclusões
+      \item \textbf{``SI2''} e \textbf{``SI1''} = Inclusões
   pequenas, mas fáceis de serem visualizadas com lupa de 10x;
-  \textgreater{}- \textbf{``VS2''} e \textbf{``VS1''} = Inclusões muito
+      \item \textbf{``VS2''} e \textbf{``VS1''} = Inclusões muito
   pequenas e difíceis de serem visualizadas com lupa de 10x;
-  \textgreater{}- \textbf{``VVS2''} e \textbf{``VVS1''} = Inclusões
+      \item \textbf{``VVS2''} e \textbf{``VVS1''} = Inclusões
   extremamente pequenas e muito difíceis de serem visualizadas com lupa
-  de 10x; \textgreater{}- \textbf{``IF''} = Livre de inclusões
+  de 10x;
+      \item \textbf{``IF''} = Livre de inclusões
   (classificação de maior valor).
+  \end{itemize}
 \item
   \textbf{x}: Comprimento em milímetros;
 \item
@@ -359,17 +369,17 @@ Cada atributo do conjunto de dados está descrito abaixo:
 \item
   \textbf{table}: Razão percentual entre entre a largura no topo e a
   largura no ponto mais largo;
-\item ~
-  \hypertarget{price-preuxe7o-do-diamante-em-duxf3lares-americanos.}{%
-  \subsection{\texorpdfstring{\textbf{price}: Preço do diamante, em
-  dólares
-  americanos.}{price: Preço do diamante, em dólares americanos.}}\label{price-preuxe7o-do-diamante-em-duxf3lares-americanos.}}
+\item
+  \textbf{price}: Preço do diamante, em dólares americanos;
 
-  \textbf{OBS:} Este documento apresenta partes com código comentado
-  devido aos testes realizados durante o desenvolvimento do modelo.
-  Foram mantidos para melhor compreensão da lógica utilizada e para
-  reprodução, a quem interessar.
 \end{itemize}
+
+\bigskip
+
+\textbf{OBS:} Este documento apresenta partes com código comentado
+devido aos testes realizados durante o desenvolvimento do modelo.
+Foram mantidos para melhor compreensão da lógica utilizada e para
+reprodução, a quem interessar.
 
     \hypertarget{importando-as-bibliotecas-e-ferramentas}{%
 \section{Importando as Bibliotecas e
@@ -389,71 +399,74 @@ bibliotecas disponíveis em Python:
 \end{itemize}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}188}]:} \PY{c+c1}{\PYZsh{} Importando as bibliotecas e setando o ambiente de desenvolvimento}
-          
-          \PY{c+c1}{\PYZsh{} Bibliotecas para processamento e manipulacao dos dados}
-          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-          \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
-          
-          \PY{c+c1}{\PYZsh{} Bibliotecas para visualizacao dos dados}
-          \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-          \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
-          
-          \PY{c+c1}{\PYZsh{} Bibliotecas dos modelos de treinamento}
-          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}\PY{p}{,} \PY{n}{Ridge}\PY{p}{,} \PY{n}{Lasso}
-          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{RandomForestRegressor}\PY{p}{,} \PY{n}{GradientBoostingRegressor}\PY{p}{,} \PY{n}{AdaBoostRegressor}\PY{p}{,} \PY{n}{ExtraTreesRegressor}
-          
-          \PY{c+c1}{\PYZsh{} Bibliotecas de ferramentas e métricas}
-          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{,} \PY{n}{RandomizedSearchCV}\PY{p}{,} \PY{n}{GridSearchCV}\PY{p}{,} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{,} \PY{n}{cross\PYZus{}validate}
-          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{,} \PY{n}{r2\PYZus{}score}\PY{p}{,} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{,} \PY{n}{make\PYZus{}scorer}
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Importando as bibliotecas e setando o ambiente de desenvolvimento}
+        
+        \PY{c+c1}{\PYZsh{} Bibliotecas para processamento e manipulacao dos dados}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        
+        \PY{c+c1}{\PYZsh{} Bibliotecas para visualizacao dos dados}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        
+        \PY{c+c1}{\PYZsh{} Bibliotecas dos modelos de treinamento}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}\PY{p}{,} \PY{n}{Ridge}\PY{p}{,} \PY{n}{Lasso}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{RandomForestRegressor}\PY{p}{,} \PY{n}{GradientBoostingRegressor}\PY{p}{,} \PYZbs{}
+                                     \PY{n}{AdaBoostRegressor}\PY{p}{,} \PY{n}{ExtraTreesRegressor}
+        
+        \PY{c+c1}{\PYZsh{} Bibliotecas de ferramentas e métricas}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{,} \PY{n}{RandomizedSearchCV}\PY{p}{,} \PYZbs{}
+                                            \PY{n}{GridSearchCV}\PY{p}{,} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{,} \PY{n}{cross\PYZus{}validate}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{,} \PY{n}{r2\PYZus{}score}\PY{p}{,} \PYZbs{}
+                                    \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{,} \PY{n}{make\PYZus{}scorer}
 \end{Verbatim}
 
     \hypertarget{minerauxe7uxe3o-e-anuxe1lise-de-dados}{%
 \section{Mineração e Análise de
 Dados}\label{minerauxe7uxe3o-e-anuxe1lise-de-dados}}
 
-    A seguir, segue o passo a passo para analisar e tratar o conjunto de
-dados de acordo com as observações.
+    A seguir, demonstra-se o passo a passo para analisar e tratar o conjunto
+de dados de acordo com as observações.
 
     \hypertarget{carregando-conjunto-de-treino}{%
 \subsubsection{Carregando Conjunto de
 Treino}\label{carregando-conjunto-de-treino}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}189}]:} \PY{c+c1}{\PYZsh{} Carregando os dados de treino como dataframe}
-          \PY{c+c1}{\PYZsh{} e observando os atributos}
-          \PY{n}{train} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/train.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Carregando os dados de treino como dataframe}
+        \PY{c+c1}{\PYZsh{} e observando os atributos}
+        \PY{n}{train} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/train.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}189}]:}       id  carat        cut color clarity     x     y     z  depth  table  \textbackslash{}
-          0  20000   0.35  Very Good     G    VVS2  4.44  4.48  2.80   62.8   58.0   
-          1  20001   0.70      Ideal     F     SI1  5.66  5.69  3.55   62.6   56.0   
-          2  20002   0.32      Ideal     F    VVS1  4.42  4.38  2.70   61.4   56.0   
-          3  20003   0.30      Ideal     H    VVS2  4.32  4.35  2.67   61.7   54.2   
-          4  20004   0.33    Premium     I    VVS2  4.41  4.47  2.76   62.2   59.0   
-          
-             price  
-          0    798  
-          1   2089  
-          2    990  
-          3    631  
-          4    579  
+{\color{outcolor}Out[{\color{outcolor}2}]:}       id  carat        cut color clarity     x     y     z  depth  table  \textbackslash{}
+        0  20000   0.35  Very Good     G    VVS2  4.44  4.48  2.80   62.8   58.0   
+        1  20001   0.70      Ideal     F     SI1  5.66  5.69  3.55   62.6   56.0   
+        2  20002   0.32      Ideal     F    VVS1  4.42  4.38  2.70   61.4   56.0   
+        3  20003   0.30      Ideal     H    VVS2  4.32  4.35  2.67   61.7   54.2   
+        4  20004   0.33    Premium     I    VVS2  4.41  4.47  2.76   62.2   59.0   
+        
+           price  
+        0    798  
+        1   2089  
+        2    990  
+        3    631  
+        4    579  
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}190}]:} \PY{c+c1}{\PYZsh{} Verificando tamanho do dataframe}
-          \PY{n}{train}\PY{o}{.}\PY{n}{shape}
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Verificando tamanho do dataframe}
+        \PY{n}{train}\PY{o}{.}\PY{n}{shape}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}190}]:} (33940, 11)
+{\color{outcolor}Out[{\color{outcolor}3}]:} (33940, 11)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}191}]:} \PY{c+c1}{\PYZsh{} Verificando informacoes especificas}
-          \PY{n}{train}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Verificando informacoes especificas}
+        \PY{n}{train}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -477,65 +490,65 @@ memory usage: 2.8+ MB
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}192}]:} \PY{c+c1}{\PYZsh{} Setando o index do arquivo como index do dataframe}
-          \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Setando o index do arquivo como index do dataframe}
+        \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}192}]:}        carat        cut color clarity     x     y     z  depth  table  price
-          id                                                                          
-          20000   0.35  Very Good     G    VVS2  4.44  4.48  2.80   62.8   58.0    798
-          20001   0.70      Ideal     F     SI1  5.66  5.69  3.55   62.6   56.0   2089
-          20002   0.32      Ideal     F    VVS1  4.42  4.38  2.70   61.4   56.0    990
-          20003   0.30      Ideal     H    VVS2  4.32  4.35  2.67   61.7   54.2    631
-          20004   0.33    Premium     I    VVS2  4.41  4.47  2.76   62.2   59.0    579
+{\color{outcolor}Out[{\color{outcolor}5}]:}        carat        cut color clarity     x     y     z  depth  table  price
+        id                                                                          
+        20000   0.35  Very Good     G    VVS2  4.44  4.48  2.80   62.8   58.0    798
+        20001   0.70      Ideal     F     SI1  5.66  5.69  3.55   62.6   56.0   2089
+        20002   0.32      Ideal     F    VVS1  4.42  4.38  2.70   61.4   56.0    990
+        20003   0.30      Ideal     H    VVS2  4.32  4.35  2.67   61.7   54.2    631
+        20004   0.33    Premium     I    VVS2  4.41  4.47  2.76   62.2   59.0    579
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}193}]:} \PY{c+c1}{\PYZsh{} Verificando se existem valores nulos para o conjunto de treino}
-          \PY{n}{train}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Verificando se existem valores nulos para o conjunto de treino}
+        \PY{n}{train}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}193}]:} carat      0
-          cut        0
-          color      0
-          clarity    0
-          x          0
-          y          0
-          z          0
-          depth      0
-          table      0
-          price      0
-          dtype: int64
+{\color{outcolor}Out[{\color{outcolor}6}]:} carat      0
+        cut        0
+        color      0
+        clarity    0
+        x          0
+        y          0
+        z          0
+        depth      0
+        table      0
+        price      0
+        dtype: int64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}194}]:} \PY{c+c1}{\PYZsh{} Verificando os detalhes de cada caracteristica}
-          \PY{n}{train}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Verificando os detalhes de cada caracteristica}
+        \PY{n}{train}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}194}]:}               carat             x             y             z         depth  \textbackslash{}
-          count  33940.000000  33940.000000  33940.000000  33940.000000  33940.000000   
-          mean       0.796249      5.727926      5.730563      3.535916     61.746491   
-          std        0.472866      1.119282      1.120279      0.693763      1.425570   
-          min        0.200000      0.000000      0.000000      0.000000     43.000000   
-          25\%        0.400000      4.710000      4.720000      2.910000     61.000000   
-          50\%        0.700000      5.700000      5.710000      3.520000     61.800000   
-          75\%        1.040000      6.540000      6.530000      4.030000     62.500000   
-          max        5.010000     10.740000     31.800000      6.980000     79.000000   
-          
-                        table         price  
-          count  33940.000000  33940.000000  
-          mean      57.467664   3920.022864  
-          std        2.237116   3980.229999  
-          min       44.000000    326.000000  
-          25\%       56.000000    952.000000  
-          50\%       57.000000   2395.000000  
-          75\%       59.000000   5294.000000  
-          max       95.000000  18823.000000  
+{\color{outcolor}Out[{\color{outcolor}7}]:}               carat             x             y             z         depth  \textbackslash{}
+        count  33940.000000  33940.000000  33940.000000  33940.000000  33940.000000   
+        mean       0.796249      5.727926      5.730563      3.535916     61.746491   
+        std        0.472866      1.119282      1.120279      0.693763      1.425570   
+        min        0.200000      0.000000      0.000000      0.000000     43.000000   
+        25\%        0.400000      4.710000      4.720000      2.910000     61.000000   
+        50\%        0.700000      5.700000      5.710000      3.520000     61.800000   
+        75\%        1.040000      6.540000      6.530000      4.030000     62.500000   
+        max        5.010000     10.740000     31.800000      6.980000     79.000000   
+        
+                      table         price  
+        count  33940.000000  33940.000000  
+        mean      57.467664   3920.022864  
+        std        2.237116   3980.229999  
+        min       44.000000    326.000000  
+        25\%       56.000000    952.000000  
+        50\%       57.000000   2395.000000  
+        75\%       59.000000   5294.000000  
+        max       95.000000  18823.000000  
 \end{Verbatim}
             
     Como x, y e z são variáveis relacionadas às dimensões de cada diamante,
@@ -544,69 +557,70 @@ retirar estes dados do conjunto de treino para que o modelo não seja
 prejudicado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}195}]:} \PY{c+c1}{\PYZsh{} Para realizar este processamento, redefine\PYZhy{}se o conjunto de treino}
-          \PY{c+c1}{\PYZsh{} como todos os dados em que x, y e z sao diferentes de 0}
-          \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
-          
-          \PY{c+c1}{\PYZsh{} Para confirmar}
-          \PY{n}{train}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} Para realizar este processamento, redefine\PYZhy{}se o conjunto}
+        \PY{c+c1}{\PYZsh{} de treino como todos os dados em que x, y e z sao}
+        \PY{c+c1}{\PYZsh{} diferentes de 0}
+        \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Para confirmar}
+        \PY{n}{train}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}195}]:}               carat             x             y             z         depth  \textbackslash{}
-          count  33929.000000  33929.000000  33929.000000  33929.000000  33929.000000   
-          mean       0.796061      5.728073      5.730722      3.537062     61.746754   
-          std        0.472740      1.117848      1.118862      0.690948      1.425311   
-          min        0.200000      3.730000      3.680000      1.070000     43.000000   
-          25\%        0.400000      4.710000      4.720000      2.910000     61.000000   
-          50\%        0.700000      5.690000      5.710000      3.520000     61.800000   
-          75\%        1.040000      6.530000      6.530000      4.030000     62.500000   
-          max        5.010000     10.740000     31.800000      6.980000     79.000000   
-          
-                       table         price  
-          count  33929.00000  33929.000000  
-          mean      57.46752   3918.401692  
-          std        2.23705   3978.347387  
-          min       44.00000    326.000000  
-          25\%       56.00000    952.000000  
-          50\%       57.00000   2394.000000  
-          75\%       59.00000   5293.000000  
-          max       95.00000  18823.000000  
+{\color{outcolor}Out[{\color{outcolor}8}]:}               carat             x             y             z         depth  \textbackslash{}
+        count  33929.000000  33929.000000  33929.000000  33929.000000  33929.000000   
+        mean       0.796061      5.728073      5.730722      3.537062     61.746754   
+        std        0.472740      1.117848      1.118862      0.690948      1.425311   
+        min        0.200000      3.730000      3.680000      1.070000     43.000000   
+        25\%        0.400000      4.710000      4.720000      2.910000     61.000000   
+        50\%        0.700000      5.690000      5.710000      3.520000     61.800000   
+        75\%        1.040000      6.530000      6.530000      4.030000     62.500000   
+        max        5.010000     10.740000     31.800000      6.980000     79.000000   
+        
+                     table         price  
+        count  33929.00000  33929.000000  
+        mean      57.46752   3918.401692  
+        std        2.23705   3978.347387  
+        min       44.00000    326.000000  
+        25\%       56.00000    952.000000  
+        50\%       57.00000   2394.000000  
+        75\%       59.00000   5293.000000  
+        max       95.00000  18823.000000  
 \end{Verbatim}
             
-    Como pode ser observado, agora, o conjunto de treino não possui mais x,
-y e z zerados, o que se confirma pelos valores encontrados na linha de
-mínimos de cada um desses atributos acima.
+    Como pode ser observado na tabela acima, após a remoção de zeros, o
+conjunto de treino apresenta valores mínimos de x, y e z acima de zero,
+tornando-se coerente com a aplicação.
 
     \hypertarget{carregando-conjunto-de-teste}{%
 \subsubsection{Carregando Conjunto de
 Teste}\label{carregando-conjunto-de-teste}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}196}]:} \PY{c+c1}{\PYZsh{} Carregando os dados de teste como dataframe}
-          \PY{n}{test} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/test.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Carregando os dados de teste como dataframe}
+        \PY{n}{test} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/test.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}196}]:}    id  carat        cut color clarity     x     y     z  depth  table
-          0   0   1.82    Premium     G     SI1  7.75  7.68  4.84   62.7   58.0
-          1   1   1.11  Very Good     H     SI1  6.63  6.65  4.11   61.9   58.0
-          2   2   0.52      Ideal     D    VVS2  5.19  5.22  3.20   61.5   55.0
-          3   3   1.05      Ideal     I     VS2  6.52  6.50  4.05   62.2   56.0
-          4   4   0.70      Ideal     I    VVS2  5.63  5.68  3.51   62.1   58.0
+{\color{outcolor}Out[{\color{outcolor}9}]:}    id  carat        cut color clarity     x     y     z  depth  table
+        0   0   1.82    Premium     G     SI1  7.75  7.68  4.84   62.7   58.0
+        1   1   1.11  Very Good     H     SI1  6.63  6.65  4.11   61.9   58.0
+        2   2   0.52      Ideal     D    VVS2  5.19  5.22  3.20   61.5   55.0
+        3   3   1.05      Ideal     I     VS2  6.52  6.50  4.05   62.2   56.0
+        4   4   0.70      Ideal     I    VVS2  5.63  5.68  3.51   62.1   58.0
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}197}]:} \PY{n}{test}\PY{o}{.}\PY{n}{shape}
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{test}\PY{o}{.}\PY{n}{shape}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}197}]:} (20000, 10)
+{\color{outcolor}Out[{\color{outcolor}10}]:} (20000, 10)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}198}]:} \PY{n}{test}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{test}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -629,64 +643,64 @@ memory usage: 1.5+ MB
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}199}]:} \PY{c+c1}{\PYZsh{} Setando o index do arquivo como index do dataframe}
-          \PY{n}{test} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} Setando o index do arquivo como index do dataframe}
+         \PY{n}{test} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}199}]:}     carat        cut color clarity     x     y     z  depth  table
-          id                                                                
-          0    1.82    Premium     G     SI1  7.75  7.68  4.84   62.7   58.0
-          1    1.11  Very Good     H     SI1  6.63  6.65  4.11   61.9   58.0
-          2    0.52      Ideal     D    VVS2  5.19  5.22  3.20   61.5   55.0
-          3    1.05      Ideal     I     VS2  6.52  6.50  4.05   62.2   56.0
-          4    0.70      Ideal     I    VVS2  5.63  5.68  3.51   62.1   58.0
+{\color{outcolor}Out[{\color{outcolor}12}]:}     carat        cut color clarity     x     y     z  depth  table
+         id                                                                
+         0    1.82    Premium     G     SI1  7.75  7.68  4.84   62.7   58.0
+         1    1.11  Very Good     H     SI1  6.63  6.65  4.11   61.9   58.0
+         2    0.52      Ideal     D    VVS2  5.19  5.22  3.20   61.5   55.0
+         3    1.05      Ideal     I     VS2  6.52  6.50  4.05   62.2   56.0
+         4    0.70      Ideal     I    VVS2  5.63  5.68  3.51   62.1   58.0
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}200}]:} \PY{c+c1}{\PYZsh{} Verificando se existem valores nulos para o conjunto de teste}
-          \PY{n}{test}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Verificando se existem valores nulos para o conjunto de teste}
+         \PY{n}{test}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}200}]:} carat      0
-          cut        0
-          color      0
-          clarity    0
-          x          0
-          y          0
-          z          0
-          depth      0
-          table      0
-          dtype: int64
+{\color{outcolor}Out[{\color{outcolor}13}]:} carat      0
+         cut        0
+         color      0
+         clarity    0
+         x          0
+         y          0
+         z          0
+         depth      0
+         table      0
+         dtype: int64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}201}]:} \PY{c+c1}{\PYZsh{} Verificando os detalhes de cada caracteristica}
-          \PY{n}{test}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Verificando os detalhes de cada caracteristica}
+         \PY{n}{test}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}201}]:}               carat             x             y             z        depth  \textbackslash{}
-          count  20000.000000  20000.000000  20000.000000  20000.000000  20000.00000   
-          mean       0.800809      5.736641      5.741252      3.543516     61.75435   
-          std        0.475947      1.125961      1.178295      0.725497      1.44453   
-          min        0.200000      0.000000      0.000000      0.000000     44.00000   
-          25\%        0.400000      4.720000      4.730000      2.910000     61.00000   
-          50\%        0.700000      5.700000      5.710000      3.530000     61.80000   
-          75\%        1.050000      6.550000      6.540000      4.040000     62.50000   
-          max        3.670000      9.860000     58.900000     31.800000     79.00000   
-          
-                        table  
-          count  20000.000000  
-          mean      57.439400  
-          std        2.229972  
-          min       43.000000  
-          25\%       56.000000  
-          50\%       57.000000  
-          75\%       59.000000  
-          max       79.000000  
+{\color{outcolor}Out[{\color{outcolor}14}]:}               carat             x             y             z        depth  \textbackslash{}
+         count  20000.000000  20000.000000  20000.000000  20000.000000  20000.00000   
+         mean       0.800809      5.736641      5.741252      3.543516     61.75435   
+         std        0.475947      1.125961      1.178295      0.725497      1.44453   
+         min        0.200000      0.000000      0.000000      0.000000     44.00000   
+         25\%        0.400000      4.720000      4.730000      2.910000     61.00000   
+         50\%        0.700000      5.700000      5.710000      3.530000     61.80000   
+         75\%        1.050000      6.550000      6.540000      4.040000     62.50000   
+         max        3.670000      9.860000     58.900000     31.800000     79.00000   
+         
+                       table  
+         count  20000.000000  
+         mean      57.439400  
+         std        2.229972  
+         min       43.000000  
+         25\%       56.000000  
+         50\%       57.000000  
+         75\%       59.000000  
+         max       79.000000  
 \end{Verbatim}
             
     Agora, verifica-se a distribuição de cada um dos atributos numéricos do
@@ -696,12 +710,13 @@ dataset, verificando seus padrões e outliers.
 \subsubsection{Tratamento de Dados}\label{tratamento-de-dados}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}202}]:} \PY{c+c1}{\PYZsh{} Cria\PYZhy{}se a matriz de correlacao entre os atributos numericos para visualizacao inicial}
-          \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
-          
-          \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} Cria\PYZhy{}se a matriz de correlacao entre os atributos}
+         \PY{c+c1}{\PYZsh{} numericos para visualizacao inicial}
+         \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{center}
@@ -714,73 +729,76 @@ conjunto de dados, excluindo as características categóricas descritas
 anteriormente.
 
 A partir deste gráfico, é possível observar que \textbf{carat, x, y e z}
-são os atributos de maior correlação com o preço e, fatalmente, maior
-correlação entre si também, já que descrevem características
-extremamente dependentes umas das outras, como peso, comprimento,
-largura e profundidade.
+são os atributos de maior correlação com o preço e, consequentemente,
+maior correlação entre si, já que descrevem características dependentes
+umas das outras, como peso, comprimento, largura e profundidade.
 
     Define-se, então, uma função de análise, para verificar a relação de
 assimetria e curtose na distribuição de cada atributo numérico e para
-observar seu histograma e diagrama de dispersão em relação ao preço, e
-uma função de contagem de dados até determinados limiares, configurados
+observar seu histograma, diagrama de dispersão em relação ao preço e uma
+função de contagem de dados até determinados limiares, configurados
 manualmente de acordo com o histograma.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}203}]:} \PY{c+c1}{\PYZsh{} Funcao de analise de atributo}
-          \PY{k}{def} \PY{n+nf}{analysis}\PY{p}{(}\PY{n}{feature}\PY{p}{,} \PY{n}{hist}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
-              
-              \PY{c+c1}{\PYZsh{} Definindo os valores de Skewness e Kurtosis para analisar}
-              \PY{c+c1}{\PYZsh{} a simetria e quantidade de outliers respectivamente}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Skewness: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{skew}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Kurtosis: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{kurt}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-          
-              \PY{k}{if} \PY{n}{hist}\PY{p}{:}
-                  \PY{c+c1}{\PYZsh{} Plotando o histograma}
-                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-                  \PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{500}\PY{p}{)}
-                  \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-              
-              \PY{k}{if} \PY{n}{feature} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
-                  \PY{c+c1}{\PYZsh{} Plotando o diagrama de dispersão}
-                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-                  \PY{n}{train}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{feature}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-                  \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-                  
-                  
-          \PY{c+c1}{\PYZsh{} Funcao que checa a contagem para cada limiar    }
-          \PY{k}{def} \PY{n+nf}{count\PYZus{}limit}\PY{p}{(}\PY{n}{feature}\PY{p}{,} \PY{n}{inf\PYZus{}limit}\PY{p}{,} \PY{n}{sup\PYZus{}limit}\PY{p}{,} \PY{n}{hop}\PY{p}{)}\PY{p}{:}
-              
-              \PY{n}{n} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{sup\PYZus{}limit} \PY{o}{\PYZhy{}} \PY{n}{inf\PYZus{}limit}\PY{p}{)} \PY{o}{/} \PY{n}{hop}\PY{p}{)}
-              \PY{n}{p} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
-              
-              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
-                  \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{inf\PYZus{}limit} \PY{o}{+} \PY{p}{(}\PY{n}{hop} \PY{o}{*} \PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
-                  \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{/} \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{sup\PYZus{}limit}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
-                  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de pontos abaixo de }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ :}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{inf\PYZus{}limit} \PY{o}{+} \PY{p}{(}\PY{n}{hop} \PY{o}{*} \PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PYZbs{}
-                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Porcentagem: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Funcao de analise de atributo}
+         \PY{k}{def} \PY{n+nf}{analysis}\PY{p}{(}\PY{n}{feature}\PY{p}{,} \PY{n}{hist}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+             
+             \PY{c+c1}{\PYZsh{} Definindo os valores de Skewness e Kurtosis}
+             \PY{c+c1}{\PYZsh{} para analisar a simetria e quantidade de}
+             \PY{c+c1}{\PYZsh{} outliers respectivamente}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Skewness: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{skew}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Kurtosis: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{kurt}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+             \PY{k}{if} \PY{n}{hist}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} Plotando o histograma}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{500}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+             \PY{k}{if} \PY{n}{feature} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} Plotando o diagrama de dispersão}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{train}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{feature}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                 
+                 
+         \PY{c+c1}{\PYZsh{} Funcao que checa a contagem para cada limiar    }
+         \PY{k}{def} \PY{n+nf}{count\PYZus{}limit}\PY{p}{(}\PY{n}{feature}\PY{p}{,} \PY{n}{inf\PYZus{}limit}\PY{p}{,} \PY{n}{sup\PYZus{}limit}\PY{p}{,} \PY{n}{hop}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{n} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{sup\PYZus{}limit} \PY{o}{\PYZhy{}} \PY{n}{inf\PYZus{}limit}\PY{p}{)} \PY{o}{/} \PY{n}{hop}\PY{p}{)}
+             \PY{n}{p} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PYZbs{}
+                                 \PY{p}{(}\PY{n}{inf\PYZus{}limit} \PY{o}{+} \PY{p}{(}\PY{n}{hop} \PY{o}{*} \PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{/} \PYZbs{}
+                                     \PY{n}{train}\PY{p}{[}\PY{n}{train}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}} \PYZbs{}
+                                           \PY{n}{sup\PYZus{}limit}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pontos abaixo de }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ :}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{inf\PYZus{}limit} \PY{o}{+} \PY{p}{(}\PY{n}{hop} \PY{o}{*} \PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PYZbs{}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Porcentagem: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
     \hypertarget{preuxe7o}{%
 \paragraph{Preço}\label{preuxe7o}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}204}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}204}]:} count    33929.000000
-          mean      3918.401692
-          std       3978.347387
-          min        326.000000
-          25\%        952.000000
-          50\%       2394.000000
-          75\%       5293.000000
-          max      18823.000000
-          Name: price, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}17}]:} count    33929.000000
+         mean      3918.401692
+         std       3978.347387
+         min        326.000000
+         25\%        952.000000
+         50\%       2394.000000
+         75\%       5293.000000
+         max      18823.000000
+         Name: price, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}205}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -795,18 +813,18 @@ Kurtosis: 2.224956771069901
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}206}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{,} \PY{l+m+mi}{20000}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{,} \PY{l+m+mi}{20000}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 2500 : 17381.0 Porcentagem: 51.23 \%
-Quantidade de pontos abaixo de 5000 : 24717.0 Porcentagem: 72.85 \%
-Quantidade de pontos abaixo de 7500 : 28734.0 Porcentagem: 84.69 \%
-Quantidade de pontos abaixo de 10000 : 30664.0 Porcentagem: 90.38 \%
-Quantidade de pontos abaixo de 12500 : 31976.0 Porcentagem: 94.24 \%
-Quantidade de pontos abaixo de 15000 : 32881.0 Porcentagem: 96.91 \%
-Quantidade de pontos abaixo de 17500 : 33630.0 Porcentagem: 99.12 \%
-Quantidade de pontos abaixo de 20000 : 33929.0 Porcentagem: 100.0 \%
+Pontos abaixo de 2500 : 17381.0 Porcentagem: 51.23 \%
+Pontos abaixo de 5000 : 24717.0 Porcentagem: 72.85 \%
+Pontos abaixo de 7500 : 28734.0 Porcentagem: 84.69 \%
+Pontos abaixo de 10000 : 30664.0 Porcentagem: 90.38 \%
+Pontos abaixo de 12500 : 31976.0 Porcentagem: 94.24 \%
+Pontos abaixo de 15000 : 32881.0 Porcentagem: 96.91 \%
+Pontos abaixo de 17500 : 33630.0 Porcentagem: 99.12 \%
+Pontos abaixo de 20000 : 33929.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -820,23 +838,23 @@ remover nenhum valor específico.
 \paragraph{Carat}\label{carat}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}207}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}207}]:} count    33929.000000
-          mean         0.796061
-          std          0.472740
-          min          0.200000
-          25\%          0.400000
-          50\%          0.700000
-          75\%          1.040000
-          max          5.010000
-          Name: carat, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}20}]:} count    33929.000000
+         mean         0.796061
+         std          0.472740
+         min          0.200000
+         25\%          0.400000
+         50\%          0.700000
+         75\%          1.040000
+         max          5.010000
+         Name: carat, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}208}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -862,16 +880,16 @@ Kurtosis: 1.4017522300920007
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}209}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{carat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 0.5 : 11121.0 Porcentagem: 32.8 \%
-Quantidade de pontos abaixo de 1.0 : 21961.0 Porcentagem: 64.77 \%
-Quantidade de pontos abaixo de 1.5 : 30074.0 Porcentagem: 88.7 \%
-Quantidade de pontos abaixo de 2.0 : 32589.0 Porcentagem: 96.12 \%
-Quantidade de pontos abaixo de 2.5 : 33847.0 Porcentagem: 99.83 \%
-Quantidade de pontos abaixo de 3.0 : 33905.0 Porcentagem: 100.0 \%
+Pontos abaixo de 0.5 : 11121.0 Porcentagem: 32.8 \%
+Pontos abaixo de 1.0 : 21961.0 Porcentagem: 64.77 \%
+Pontos abaixo de 1.5 : 30074.0 Porcentagem: 88.7 \%
+Pontos abaixo de 2.0 : 32589.0 Porcentagem: 96.12 \%
+Pontos abaixo de 2.5 : 33847.0 Porcentagem: 99.83 \%
+Pontos abaixo de 3.0 : 33905.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -880,40 +898,37 @@ Quantidade de pontos abaixo de 3.0 : 33905.0 Porcentagem: 100.0 \%
 
     De acordo com a observação do gráfico acima e da quantidade de dados
 acumulados, os outliers poderiam ser considerados com \textbf{carat}
-abaixo de 2.4, por exemplo. Além disso, é importante observar o
-comportamento espaçado do atributo, assumindo conjuntos de valores a
-partir de determinadas ``linhas bem definidas''.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+acima de 2.4. Porém, ao testar o modelo com a remoção deste dados, houve
+piora no desempenho geral, por isso, durante os testes finais, esta
+remoção foi desconsiderada e o código abaixo foi comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}210}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}carat\PYZsq{}] \PYZlt{} 2.4]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}carat\PYZsq{}, hist=False)}
+{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}carat\PYZsq{}] \PYZlt{} 2.4]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}carat\PYZsq{}, hist=False)}
 \end{Verbatim}
 
     \hypertarget{x}{%
 \paragraph{x}\label{x}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}211}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}211}]:} count    33929.000000
-          mean         5.728073
-          std          1.117848
-          min          3.730000
-          25\%          4.710000
-          50\%          5.690000
-          75\%          6.530000
-          max         10.740000
-          Name: x, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}24}]:} count    33929.000000
+         mean         5.728073
+         std          1.117848
+         min          3.730000
+         25\%          4.710000
+         50\%          5.690000
+         75\%          6.530000
+         max         10.740000
+         Name: x, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}212}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -939,16 +954,16 @@ Kurtosis: -0.694819285807756
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}213}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 4 : 292.0 Porcentagem: 0.86 \%
-Quantidade de pontos abaixo de 5 : 11051.0 Porcentagem: 32.59 \%
-Quantidade de pontos abaixo de 6 : 19886.0 Porcentagem: 58.65 \%
-Quantidade de pontos abaixo de 7 : 29416.0 Porcentagem: 86.76 \%
-Quantidade de pontos abaixo de 8 : 32750.0 Porcentagem: 96.6 \%
-Quantidade de pontos abaixo de 9 : 33904.0 Porcentagem: 100.0 \%
+Pontos abaixo de 4 : 292.0 Porcentagem: 0.86 \%
+Pontos abaixo de 5 : 11051.0 Porcentagem: 32.59 \%
+Pontos abaixo de 6 : 19886.0 Porcentagem: 58.65 \%
+Pontos abaixo de 7 : 29416.0 Porcentagem: 86.76 \%
+Pontos abaixo de 8 : 32750.0 Porcentagem: 96.6 \%
+Pontos abaixo de 9 : 33904.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -956,39 +971,38 @@ Quantidade de pontos abaixo de 9 : 33904.0 Porcentagem: 100.0 \%
 \subparagraph{Removendo os Outliers}\label{removendo-os-outliers}}
 
     De acordo com a observação do gráfico acima e da quantidade de dados
-acumulados, os outliers poderiam ser considerados com \textbf{x} abaixo
-de 9, por exemplo.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+acumulados, os outliers poderiam ser considerados com \textbf{x} acima
+de 9. Porém, ao testar o modelo com a remoção deste dados, houve piora
+no desempenho geral, por isso, durante os testes finais, esta remoção
+foi desconsiderada e o código abaixo foi comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}214}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}x\PYZsq{}] \PYZlt{} 9]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}x\PYZsq{}, hist=False)}
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}x\PYZsq{}] \PYZlt{} 9]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}x\PYZsq{}, hist=False)}
 \end{Verbatim}
 
     \hypertarget{y}{%
 \paragraph{y}\label{y}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}215}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}215}]:} count    33929.000000
-          mean         5.730722
-          std          1.118862
-          min          3.680000
-          25\%          4.720000
-          50\%          5.710000
-          75\%          6.530000
-          max         31.800000
-          Name: y, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}28}]:} count    33929.000000
+         mean         5.730722
+         std          1.118862
+         min          3.680000
+         25\%          4.720000
+         50\%          5.710000
+         75\%          6.530000
+         max         31.800000
+         Name: y, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}216}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1014,17 +1028,17 @@ Kurtosis: 7.907805795324959
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}217}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{35}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{35}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 5 : 11044.0 Porcentagem: 32.55 \%
-Quantidade de pontos abaixo de 10 : 33925.0 Porcentagem: 99.99 \%
-Quantidade de pontos abaixo de 15 : 33928.0 Porcentagem: 100.0 \%
-Quantidade de pontos abaixo de 20 : 33928.0 Porcentagem: 100.0 \%
-Quantidade de pontos abaixo de 25 : 33928.0 Porcentagem: 100.0 \%
-Quantidade de pontos abaixo de 30 : 33928.0 Porcentagem: 100.0 \%
-Quantidade de pontos abaixo de 35 : 33929.0 Porcentagem: 100.0 \%
+Pontos abaixo de 5 : 11044.0 Porcentagem: 32.55 \%
+Pontos abaixo de 10 : 33925.0 Porcentagem: 99.99 \%
+Pontos abaixo de 15 : 33928.0 Porcentagem: 100.0 \%
+Pontos abaixo de 20 : 33928.0 Porcentagem: 100.0 \%
+Pontos abaixo de 25 : 33928.0 Porcentagem: 100.0 \%
+Pontos abaixo de 30 : 33928.0 Porcentagem: 100.0 \%
+Pontos abaixo de 35 : 33929.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -1032,39 +1046,38 @@ Quantidade de pontos abaixo de 35 : 33929.0 Porcentagem: 100.0 \%
 \subparagraph{Removendo os Outliers}\label{removendo-os-outliers}}
 
     De acordo com a observação do gráfico acima e da quantidade de dados
-acumulados, os outliers poderiam ser considerados com \textbf{y} abaixo
-de 10, por exemplo.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+acumulados, os outliers poderiam ser considerados com \textbf{y} acima
+de 10. Porém, ao testar o modelo com a remoção deste dados, houve piora
+no desempenho geral, por isso, durante os testes finais, esta remoção
+foi desconsiderada e o código abaixo foi comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}218}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}y\PYZsq{}] \PYZlt{} 10]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}y\PYZsq{})}
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}y\PYZsq{}] \PYZlt{} 10]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}y\PYZsq{})}
 \end{Verbatim}
 
     \hypertarget{z}{%
 \paragraph{z}\label{z}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}219}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}219}]:} count    33929.000000
-          mean         3.537062
-          std          0.690948
-          min          1.070000
-          25\%          2.910000
-          50\%          3.520000
-          75\%          4.030000
-          max          6.980000
-          Name: z, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}32}]:} count    33929.000000
+         mean         3.537062
+         std          0.690948
+         min          1.070000
+         25\%          2.910000
+         50\%          3.520000
+         75\%          4.030000
+         max          6.980000
+         Name: z, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}220}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1090,21 +1103,21 @@ Kurtosis: -0.6716881124170859
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}221}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 1.0 : 0.0 Porcentagem: 0.0 \%
-Quantidade de pontos abaixo de 1.5 : 2.0 Porcentagem: 0.01 \%
-Quantidade de pontos abaixo de 2.0 : 3.0 Porcentagem: 0.01 \%
-Quantidade de pontos abaixo de 2.5 : 418.0 Porcentagem: 1.23 \%
-Quantidade de pontos abaixo de 3.0 : 10410.0 Porcentagem: 30.69 \%
-Quantidade de pontos abaixo de 3.5 : 16446.0 Porcentagem: 48.48 \%
-Quantidade de pontos abaixo de 4.0 : 24190.0 Porcentagem: 71.31 \%
-Quantidade de pontos abaixo de 4.5 : 30397.0 Porcentagem: 89.61 \%
-Quantidade de pontos abaixo de 5.0 : 32955.0 Porcentagem: 97.16 \%
-Quantidade de pontos abaixo de 5.5 : 33891.0 Porcentagem: 99.91 \%
-Quantidade de pontos abaixo de 6.0 : 33920.0 Porcentagem: 100.0 \%
+Pontos abaixo de 1.0 : 0.0 Porcentagem: 0.0 \%
+Pontos abaixo de 1.5 : 2.0 Porcentagem: 0.01 \%
+Pontos abaixo de 2.0 : 3.0 Porcentagem: 0.01 \%
+Pontos abaixo de 2.5 : 418.0 Porcentagem: 1.23 \%
+Pontos abaixo de 3.0 : 10410.0 Porcentagem: 30.69 \%
+Pontos abaixo de 3.5 : 16446.0 Porcentagem: 48.48 \%
+Pontos abaixo de 4.0 : 24190.0 Porcentagem: 71.31 \%
+Pontos abaixo de 4.5 : 30397.0 Porcentagem: 89.61 \%
+Pontos abaixo de 5.0 : 32955.0 Porcentagem: 97.16 \%
+Pontos abaixo de 5.5 : 33891.0 Porcentagem: 99.91 \%
+Pontos abaixo de 6.0 : 33920.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -1112,40 +1125,39 @@ Quantidade de pontos abaixo de 6.0 : 33920.0 Porcentagem: 100.0 \%
 \subparagraph{Removendo os Outliers}\label{removendo-os-outliers}}
 
     De acordo com a observação do gráfico acima e da quantidade de dados
-acumulados, os outliers poderiam ser considerados com \textbf{z} acima
-de 2.2 e abaixo de 5.4, por exemplo.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+acumulados, os outliers poderiam ser considerados com \textbf{z} abaixo
+de 2.2 e acima de 5.4. Porém, ao testar o modelo com a remoção deste
+dados, houve piora no desempenho geral, por isso, durante os testes
+finais, esta remoção foi desconsiderada e o código abaixo foi comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}222}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}z\PYZsq{}] \PYZgt{} 2.2]}
-          \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}z\PYZsq{}] \PYZlt{} 5.4]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}z\PYZsq{})}
+{\color{incolor}In [{\color{incolor}35}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}z\PYZsq{}] \PYZgt{} 2.2]}
+         \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}z\PYZsq{}] \PYZlt{} 5.4]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}z\PYZsq{})}
 \end{Verbatim}
 
     \hypertarget{depth}{%
 \paragraph{depth}\label{depth}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}223}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}223}]:} count    33929.000000
-          mean        61.746754
-          std          1.425311
-          min         43.000000
-          25\%         61.000000
-          50\%         61.800000
-          75\%         62.500000
-          max         79.000000
-          Name: depth, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}36}]:} count    33929.000000
+         mean        61.746754
+         std          1.425311
+         min         43.000000
+         25\%         61.000000
+         50\%         61.800000
+         75\%         62.500000
+         max         79.000000
+         Name: depth, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}224}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1171,18 +1183,18 @@ Kurtosis: 5.467708844561626
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}225}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 45 : 2.0 Porcentagem: 0.01 \%
-Quantidade de pontos abaixo de 50 : 2.0 Porcentagem: 0.01 \%
-Quantidade de pontos abaixo de 55 : 13.0 Porcentagem: 0.04 \%
-Quantidade de pontos abaixo de 60 : 3216.0 Porcentagem: 9.48 \%
-Quantidade de pontos abaixo de 65 : 33387.0 Porcentagem: 98.4 \%
-Quantidade de pontos abaixo de 70 : 33917.0 Porcentagem: 99.96 \%
-Quantidade de pontos abaixo de 75 : 33928.0 Porcentagem: 100.0 \%
-Quantidade de pontos abaixo de 80 : 33929.0 Porcentagem: 100.0 \%
+Pontos abaixo de 45 : 2.0 Porcentagem: 0.01 \%
+Pontos abaixo de 50 : 2.0 Porcentagem: 0.01 \%
+Pontos abaixo de 55 : 13.0 Porcentagem: 0.04 \%
+Pontos abaixo de 60 : 3216.0 Porcentagem: 9.48 \%
+Pontos abaixo de 65 : 33387.0 Porcentagem: 98.4 \%
+Pontos abaixo de 70 : 33917.0 Porcentagem: 99.96 \%
+Pontos abaixo de 75 : 33928.0 Porcentagem: 100.0 \%
+Pontos abaixo de 80 : 33929.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -1191,39 +1203,39 @@ Quantidade de pontos abaixo de 80 : 33929.0 Porcentagem: 100.0 \%
 
     De acordo com a observação do gráfico acima e da quantidade de dados
 acumulados, os outliers poderiam ser considerados com \textbf{depth}
-acima de 56 e abaixo de 67, por exemplo.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+abaixo de 56 e acima de 67. Porém, ao testar o modelo com a remoção
+deste dados, houve piora no desempenho geral, por isso, durante os
+testes finais, esta remoção foi desconsiderada e o código abaixo foi
+comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}226}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}depth\PYZsq{}] \PYZgt{} 56]}
-          \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}depth\PYZsq{}] \PYZlt{} 67]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}depth\PYZsq{})}
+{\color{incolor}In [{\color{incolor}39}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}depth\PYZsq{}] \PYZgt{} 56]}
+         \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}depth\PYZsq{}] \PYZlt{} 67]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}depth\PYZsq{})}
 \end{Verbatim}
 
     \hypertarget{table}{%
 \paragraph{table}\label{table}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}227}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}227}]:} count    33929.00000
-          mean        57.46752
-          std          2.23705
-          min         44.00000
-          25\%         56.00000
-          50\%         57.00000
-          75\%         59.00000
-          max         95.00000
-          Name: table, dtype: float64
+{\color{outcolor}Out[{\color{outcolor}40}]:} count    33929.00000
+         mean        57.46752
+         std          2.23705
+         min         44.00000
+         25\%         56.00000
+         50\%         57.00000
+         75\%         59.00000
+         max         95.00000
+         Name: table, dtype: float64
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}228}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{analysis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1249,17 +1261,17 @@ Kurtosis: 3.4298697674709766
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}229}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{75}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{count\PYZus{}limit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{table}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{45}\PY{p}{,} \PY{l+m+mi}{75}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Quantidade de pontos abaixo de 45 : 1.0 Porcentagem: 0.0 \%
-Quantidade de pontos abaixo de 50 : 2.0 Porcentagem: 0.01 \%
-Quantidade de pontos abaixo de 55 : 2236.0 Porcentagem: 6.59 \%
-Quantidade de pontos abaixo de 60 : 28131.0 Porcentagem: 82.92 \%
-Quantidade de pontos abaixo de 65 : 33739.0 Porcentagem: 99.45 \%
-Quantidade de pontos abaixo de 70 : 33917.0 Porcentagem: 99.97 \%
-Quantidade de pontos abaixo de 75 : 33927.0 Porcentagem: 100.0 \%
+Pontos abaixo de 45 : 1.0 Porcentagem: 0.0 \%
+Pontos abaixo de 50 : 2.0 Porcentagem: 0.01 \%
+Pontos abaixo de 55 : 2236.0 Porcentagem: 6.59 \%
+Pontos abaixo de 60 : 28131.0 Porcentagem: 82.92 \%
+Pontos abaixo de 65 : 33739.0 Porcentagem: 99.45 \%
+Pontos abaixo de 70 : 33917.0 Porcentagem: 99.97 \%
+Pontos abaixo de 75 : 33927.0 Porcentagem: 100.0 \%
 
     \end{Verbatim}
 
@@ -1268,16 +1280,16 @@ Quantidade de pontos abaixo de 75 : 33927.0 Porcentagem: 100.0 \%
 
     De acordo com a observação do gráfico acima e da quantidade de dados
 acumulados, os outliers poderiam ser considerados com \textbf{table}
-acima de 56 e abaixo de 67, por exemplo.\\
-O modelo foi testado considerando a remoção deste dados, porém,
-apresentou melhores resultados considerando todos os casos, por isso, o
-código abaixo se encontra comentado.
+abaixo de 56 e acima de 67. Porém, ao testar o modelo com a remoção
+deste dados, houve piora no desempenho geral, por isso, durante os
+testes finais, esta remoção foi desconsiderada e o código abaixo foi
+comentado.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}230}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}table\PYZsq{}] \PYZgt{} 56]}
-          \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}table\PYZsq{}] \PYZlt{} 67]}
-          
-          \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}table\PYZsq{})}
+{\color{incolor}In [{\color{incolor}43}]:} \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}table\PYZsq{}] \PYZgt{} 56]}
+         \PY{c+c1}{\PYZsh{} train = train[train[\PYZsq{}table\PYZsq{}] \PYZlt{} 67]}
+         
+         \PY{c+c1}{\PYZsh{} analysis(\PYZsq{}table\PYZsq{})}
 \end{Verbatim}
 
     \hypertarget{outras-observauxe7uxf5es}{%
@@ -1289,13 +1301,13 @@ possíveis e, novamente, a matriz de correlações, para analisar a remoção
 de outliers caso ela seja aplicada.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}231}]:} \PY{c+c1}{\PYZsh{} Criando os graficos de dispersao para visualizacao geral}
-          
-          \PY{n}{sns}\PY{o}{.}\PY{n}{pairplot}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}44}]:} \PY{c+c1}{\PYZsh{} Criando os graficos de dispersao para visualizacao geral}
+         
+         \PY{n}{sns}\PY{o}{.}\PY{n}{pairplot}\PY{p}{(}\PY{n}{train}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}231}]:} <seaborn.axisgrid.PairGrid at 0x17c9d92f6a0>
+{\color{outcolor}Out[{\color{outcolor}44}]:} <seaborn.axisgrid.PairGrid at 0x219f4cdc6d8>
 \end{Verbatim}
             
     \begin{center}
@@ -1304,12 +1316,12 @@ de outliers caso ela seja aplicada.
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}232}]:} \PY{c+c1}{\PYZsh{} Cria a matriz de correlacao entre os atributos numericos}
-          \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
-          
-          \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}45}]:} \PY{c+c1}{\PYZsh{} Cria a matriz de correlacao entre os atributos numericos}
+         \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{center}
@@ -1325,19 +1337,19 @@ relação de cada uma das categorias com o preço e o tamanho da variância
 desta estimativa média.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}233}]:} \PY{c+c1}{\PYZsh{} Relacionando os atributos literais ao preco, com visualizacao}
-          
-          \PY{c+c1}{\PYZsh{} Analisando a influencia de cut}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cut}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-          
-          \PY{c+c1}{\PYZsh{} Analisando a influencia de color}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{color}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-          
-          \PY{c+c1}{\PYZsh{} Analisando a influencia de clarity}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{clarity}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}46}]:} \PY{c+c1}{\PYZsh{} Relacionando os atributos literais ao preco, com visualizacao}
+         
+         \PY{c+c1}{\PYZsh{} Analisando a influencia de cut}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cut}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Analisando a influencia de color}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{color}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Analisando a influencia de clarity}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{barplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{clarity}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{train}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{center}
@@ -1379,79 +1391,108 @@ As duas últimas opções foram escolhidas pois apresentaram melhores
 resultados e podem ser observadas abaixo:
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}234}]:} \PY{c+c1}{\PYZsh{} Numeros inteiros de 1 a numero de categorias do atributo}
-          \PY{c+c1}{\PYZsh{} Valores escolhidos de acordo com observacao dos graficos}
-          
-          \PY{c+c1}{\PYZsh{} cut}
-          \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ideal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Good}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Very Good}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fair}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Premium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{\PYZcb{}}\PY{p}{)}
-          \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ideal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Good}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Very Good}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fair}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Premium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{\PYZcb{}}\PY{p}{)}
-          
-          \PY{c+c1}{\PYZsh{} color}
-          \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{J}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{\PYZcb{}}\PY{p}{)}
-          \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{J}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{\PYZcb{}}\PY{p}{)}
-          
-          \PY{c+c1}{\PYZsh{} clarity}
-          \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IF}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
-                                                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{\PYZcb{}}\PY{p}{)}
-          \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IF}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
-                                                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{\PYZcb{}}\PY{p}{)}
-          
-          \PY{c+c1}{\PYZsh{} Visualizando teste para checar funcionamento}
-          \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}47}]:} \PY{c+c1}{\PYZsh{} Numeros inteiros de 1 a numero de categorias do atributo}
+         \PY{c+c1}{\PYZsh{} Valores escolhidos de acordo com observacao dos graficos}
+         
+         \PY{c+c1}{\PYZsh{} cut}
+         \PY{n}{cut\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ideal}\PY{l+s+s1}{\PYZsq{}}    \PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Good}\PY{l+s+s1}{\PYZsq{}}     \PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Very Good}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fair}\PY{l+s+s1}{\PYZsq{}}     \PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Premium}\PY{l+s+s1}{\PYZsq{}}  \PY{p}{:} \PY{l+m+mi}{5}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{cut\PYZus{}dict}\PY{p}{)}
+         \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cut}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{cut\PYZus{}dict}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} color}
+         \PY{n}{color\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{J}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{color\PYZus{}dict}\PY{p}{)}
+         \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{color\PYZus{}dict}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} clarity}
+         \PY{n}{clarity\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IF}\PY{l+s+s1}{\PYZsq{}}  \PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VVS2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS1}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VS2}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI1}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{6}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I1}\PY{l+s+s1}{\PYZsq{}}  \PY{p}{:} \PY{l+m+mi}{7}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SI2}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{8}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{clarity\PYZus{}dict}\PY{p}{)}
+         \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}  \PY{o}{=} \PY{n}{test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{clarity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{clarity\PYZus{}dict}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Visualizando teste para checar funcionamento}
+         \PY{n}{test}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}234}]:}     carat  cut  color  clarity     x     y     z  depth  table
-          id                                                            
-          0    1.82    5      4        6  7.75  7.68  4.84   62.7   58.0
-          1    1.11    3      5        6  6.63  6.65  4.11   61.9   58.0
-          2    0.52    1      2        3  5.19  5.22  3.20   61.5   55.0
-          3    1.05    1      6        5  6.52  6.50  4.05   62.2   56.0
-          4    0.70    1      6        3  5.63  5.68  3.51   62.1   58.0
+{\color{outcolor}Out[{\color{outcolor}47}]:}     carat  cut  color  clarity     x     y     z  depth  table
+         id                                                            
+         0    1.82    5      4        6  7.75  7.68  4.84   62.7   58.0
+         1    1.11    3      5        6  6.63  6.65  4.11   61.9   58.0
+         2    0.52    1      2        3  5.19  5.22  3.20   61.5   55.0
+         3    1.05    1      6        5  6.52  6.50  4.05   62.2   56.0
+         4    0.70    1      6        3  5.63  5.68  3.51   62.1   58.0
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}235}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Funcao de transformacao dos atributos categoricos}
-          \PY{c+c1}{\PYZsh{} \PYZsh{} nas medias de preco por categoria}
-          
-          \PY{c+c1}{\PYZsh{} def categ\PYZus{}feature(feature, data):}
-          \PY{c+c1}{\PYZsh{}     mean = train.groupby(feature)[\PYZsq{}price\PYZsq{}].mean()}
-          \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort = mean.reset\PYZus{}index().sort\PYZus{}values([\PYZsq{}price\PYZsq{}]).set\PYZus{}index([feature]).astype(int)}
-              
-          \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort.to\PYZus{}dict()}
-          \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort = mean\PYZus{}sort[\PYZsq{}price\PYZsq{}]}
-              
-          \PY{c+c1}{\PYZsh{}     data[feature] = data[feature].replace(mean\PYZus{}sort, inplace = False)}
-              
-          \PY{c+c1}{\PYZsh{}     return mean\PYZus{}sort, data}
+{\color{incolor}In [{\color{incolor}48}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Funcao de transformacao dos atributos categoricos}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} nas medias de preco por categoria}
+         
+         \PY{c+c1}{\PYZsh{} def categ\PYZus{}feature(feature, data):}
+         \PY{c+c1}{\PYZsh{}     mean = train.groupby(feature)[\PYZsq{}price\PYZsq{}].mean()}
+         \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort = mean.reset\PYZus{}index().sort\PYZus{}values([\PYZsq{}price\PYZsq{}]).\PYZbs{}}
+         \PY{c+c1}{\PYZsh{}                 set\PYZus{}index([feature]).astype(int)}
+             
+         \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort.to\PYZus{}dict()}
+         \PY{c+c1}{\PYZsh{}     mean\PYZus{}sort = mean\PYZus{}sort[\PYZsq{}price\PYZsq{}]}
+             
+         \PY{c+c1}{\PYZsh{}     data[feature] = data[feature].replace(mean\PYZus{}sort, \PYZbs{}}
+         \PY{c+c1}{\PYZsh{}                                           inplace = False)}
+             
+         \PY{c+c1}{\PYZsh{}     return mean\PYZus{}sort, data}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}236}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Aplicando a funcao para os dados de treino e teste}
-          
-          \PY{c+c1}{\PYZsh{} \PYZsh{} cut}
-          \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}cut, train = categ\PYZus{}feature(\PYZsq{}cut\PYZsq{}, train)}
-          \PY{c+c1}{\PYZsh{} test[\PYZsq{}cut\PYZsq{}] = test[\PYZsq{}cut\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}cut, inplace = False)}
-          
-          \PY{c+c1}{\PYZsh{} \PYZsh{}color}
-          \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}color, train = categ\PYZus{}feature(\PYZsq{}color\PYZsq{}, train)}
-          \PY{c+c1}{\PYZsh{} test[\PYZsq{}color\PYZsq{}] = test[\PYZsq{}color\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}color, inplace = False)}
-          
-          \PY{c+c1}{\PYZsh{} \PYZsh{}clarity}
-          \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}clarity, train = categ\PYZus{}feature(\PYZsq{}clarity\PYZsq{}, train)}
-          \PY{c+c1}{\PYZsh{} test[\PYZsq{}clarity\PYZsq{}] = test[\PYZsq{}clarity\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}clarity, inplace = False)}
-          
-          \PY{c+c1}{\PYZsh{} \PYZsh{} Visualizando teste para checar funcionamento}
-          \PY{c+c1}{\PYZsh{} test.head()}
+{\color{incolor}In [{\color{incolor}49}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Aplicando a funcao para os dados de treino e teste}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} cut}
+         \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}cut, train = categ\PYZus{}feature(\PYZsq{}cut\PYZsq{}, train)}
+         \PY{c+c1}{\PYZsh{} test[\PYZsq{}cut\PYZsq{}] = test[\PYZsq{}cut\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}cut, \PYZbs{}}
+         \PY{c+c1}{\PYZsh{}                                   inplace = False)}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{}color}
+         \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}color, train = categ\PYZus{}feature(\PYZsq{}color\PYZsq{}, train)}
+         \PY{c+c1}{\PYZsh{} test[\PYZsq{}color\PYZsq{}] = test[\PYZsq{}color\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}color, \PYZbs{}}
+         \PY{c+c1}{\PYZsh{}                                       inplace = False)}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{}clarity}
+         \PY{c+c1}{\PYZsh{} mean\PYZus{}sort\PYZus{}clarity, train = categ\PYZus{}feature(\PYZsq{}clarity\PYZsq{}, train)}
+         \PY{c+c1}{\PYZsh{} test[\PYZsq{}clarity\PYZsq{}] = test[\PYZsq{}clarity\PYZsq{}].replace(mean\PYZus{}sort\PYZus{}clarity, \PYZbs{}}
+         \PY{c+c1}{\PYZsh{}                                           inplace = False)}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Visualizando teste para checar funcionamento}
+         \PY{c+c1}{\PYZsh{} test.head()}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}237}]:} \PY{c+c1}{\PYZsh{} Criando a matriz de correlacao novamente para analise}
-          \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
-          
-          \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-          \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}50}]:} \PY{c+c1}{\PYZsh{} Criando a matriz de correlacao novamente para analise}
+         \PY{n}{corr\PYZus{}matrix} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{corr\PYZus{}matrix}\PY{p}{,} \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cbar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Spectral}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{center}
@@ -1482,12 +1523,15 @@ treino deve ser previamente separado em duas partes específicas: x, com
 todos os atributos, e y, com o alvo, como pode ser observado abaixo.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}238}]:} \PY{c+c1}{\PYZsh{} Criando o conjunto de treino e de teste para treinar o modelo a partir de train modificado}
-          \PY{n}{x} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
-          \PY{n}{y} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-          
-          \PY{c+c1}{\PYZsh{} Criacao de conjuntos de treino e pseudo\PYZhy{}teste a partir do conjunto geral de treino}
-          \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}51}]:} \PY{c+c1}{\PYZsh{} Separando alvo e atributos}
+         \PY{n}{x} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Criacao de conjuntos de treino e pseudo\PYZhy{}teste}
+         \PY{c+c1}{\PYZsh{} a partir do conjunto geral de treino}
+         \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PYZbs{}
+         \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PYZbs{}
+                                            \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
 \end{Verbatim}
 
     Cria-se, adicionalmente, um dicionário de comparação que irá armazenar
@@ -1500,43 +1544,48 @@ e uma responsável pela análise de cada modelo, capaz de gerar o
 treinamento, predição e calcular as métricas de cada caso.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}239}]:} \PY{c+c1}{\PYZsh{} Arrays de referência para comparação entre modelos}
-          \PY{n}{model\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Regressor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AdaBoost Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PYZbs{}
-                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Forest Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Extra Trees Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+{\color{incolor}In [{\color{incolor}52}]:} \PY{c+c1}{\PYZsh{} Arrays de referência para comparação entre modelos}
+         \PY{n}{model\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Regressor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AdaBoost Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Forest Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Extra Trees Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}240}]:} \PY{c+c1}{\PYZsh{} Função que calcula o RMSPE para validacao dos modelos}
-          \PY{k}{def} \PY{n+nf}{rmspe\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{:}
-              
-              \PY{n}{rmspe} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}test} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred}\PY{p}{)} \PY{o}{/} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-          
-              \PY{k}{return} \PY{n}{rmspe}
+{\color{incolor}In [{\color{incolor}53}]:} \PY{c+c1}{\PYZsh{} Função que calcula o RMSPE para validacao dos modelos}
+         \PY{k}{def} \PY{n+nf}{rmspe\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{rmspe} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}test} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred}\PY{p}{)} \PY{o}{/} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{rmspe}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}241}]:} \PY{c+c1}{\PYZsh{} Funcao de regressao generica, para varios modelos diferentes}
-          \PY{k}{def} \PY{n+nf}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{regressor}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{:}
-              \PY{n}{regressor}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
-              \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{regressor}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{name}\PY{p}{)}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score : }\PY{l+s+si}{\PYZpc{}.6f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{regressor}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{)}
-          
-              \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
-              \PY{n}{mae} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
-              \PY{n}{rmse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mf}{0.5}
-              \PY{n}{r2} \PY{o}{=} \PY{n}{r2\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
-              \PY{n}{rmspe} \PY{o}{=} \PY{n}{rmspe\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
-          
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE   : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{mse}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MAE   : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{mae}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSE  : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{rmse}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2    : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{r2}\PY{p}{)}
-              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{rmspe}\PY{p}{)}
-              
-              \PY{n}{model\PYZus{}dict}\PY{p}{[}\PY{n}{name}\PY{p}{]} \PY{o}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{rmspe}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}54}]:} \PY{c+c1}{\PYZsh{} Funcao de regressao generica, para varios modelos diferentes}
+         \PY{k}{def} \PY{n+nf}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{regressor}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{:}
+             \PY{n}{regressor}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+             \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{regressor}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{name}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Score : }\PY{l+s+si}{\PYZpc{}.6f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{regressor}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+             \PY{n}{mae} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+             \PY{n}{rmse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mf}{0.5}
+             \PY{n}{r2} \PY{o}{=} \PY{n}{r2\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+             \PY{n}{rmspe} \PY{o}{=} \PY{n}{rmspe\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+         
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE   : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{mse}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MAE   : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{mae}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSE  : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{rmse}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2    : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{r2}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE : }\PY{l+s+si}{\PYZpc{}0.6f}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{rmspe}\PY{p}{)}
+             
+             \PY{n}{model\PYZus{}dict}\PY{p}{[}\PY{n}{name}\PY{p}{]} \PY{o}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{rmspe}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}
 \end{Verbatim}
 
     \hypertarget{modelos-testados}{%
@@ -1544,17 +1593,17 @@ treinamento, predição e calcular as métricas de cada caso.
 
     A partir da preparação do ambiente, aplicam-se os mesmos dados para
 todos os regressores abaixo, comparando os scores e todas as métricas de
-erros. A métrica mais importante para este caso é o RMSPE, já que o
-mesmo é o que será considerado como avaliador durante a competição.
+erros. A métrica mais importante para este caso é o RMSPE, já que é
+considerada como avaliador durante a competição.
 
     \hypertarget{linear-regression}{%
 \subsubsection{Linear Regression}\label{linear-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}242}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{lr} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{lr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Regressor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}55}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{lr} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{lr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear Regressor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1567,7 +1616,7 @@ MAE   : 806.085542
 RMSE  : 1246.750934 
 R2    : 0.901517 
 RMSPE : 0.739535 
-Wall time: 539 ms
+Wall time: 35.2 ms
 
     \end{Verbatim}
 
@@ -1575,10 +1624,10 @@ Wall time: 539 ms
 \subsubsection{Lasso Regression}\label{lasso-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}243}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{lar} \PY{o}{=} \PY{n}{Lasso}\PY{p}{(}\PY{n}{normalize} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{lar}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}56}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{lar} \PY{o}{=} \PY{n}{Lasso}\PY{p}{(}\PY{n}{normalize} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{lar}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lasso Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1591,7 +1640,7 @@ MAE   : 836.359696
 RMSE  : 1316.802780 
 R2    : 0.890139 
 RMSPE : 0.553080 
-Wall time: 45.9 ms
+Wall time: 66.5 ms
 
     \end{Verbatim}
 
@@ -1599,10 +1648,10 @@ Wall time: 45.9 ms
 \subsubsection{Ridge Regression}\label{ridge-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}244}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{rr} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{normalize} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{rr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}57}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{rr} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{normalize} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{rr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1615,7 +1664,7 @@ MAE   : 1142.106206
 RMSE  : 1780.755444 
 R2    : 0.799085 
 RMSPE : 0.483945 
-Wall time: 144 ms
+Wall time: 35.4 ms
 
     \end{Verbatim}
 
@@ -1623,10 +1672,10 @@ Wall time: 144 ms
 \subsubsection{AdaBoost Regression}\label{adaboost-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}245}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{abr} \PY{o}{=} \PY{n}{AdaBoostRegressor}\PY{p}{(}\PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{abr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AdaBoost Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}58}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{abr} \PY{o}{=} \PY{n}{AdaBoostRegressor}\PY{p}{(}\PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{abr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AdaBoost Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1639,7 +1688,7 @@ MAE   : 871.986156
 RMSE  : 1126.175130 
 R2    : 0.919645 
 RMSPE : 0.669976 
-Wall time: 1.1 s
+Wall time: 2.51 s
 
     \end{Verbatim}
 
@@ -1648,11 +1697,12 @@ Wall time: 1.1 s
 Regression}\label{gradiente-boosting-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}246}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{200}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
-                                          \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{gbr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}59}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{200}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PYZbs{}
+                                         \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
+                                         \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{gbr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1665,7 +1715,7 @@ MAE   : 277.866854
 RMSE  : 563.997003 
 R2    : 0.979846 
 RMSPE : 0.091436 
-Wall time: 12.4 s
+Wall time: 32.4 s
 
     \end{Verbatim}
 
@@ -1674,10 +1724,10 @@ Wall time: 12.4 s
 Regression}\label{random-forest-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}247}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{rfr} \PY{o}{=} \PY{n}{RandomForestRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{,} \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{rfr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Forest Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}60}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{rfr} \PY{o}{=} \PY{n}{RandomForestRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{,} \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{rfr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Forest Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1690,7 +1740,7 @@ MAE   : 278.160645
 RMSE  : 550.520627 
 R2    : 0.980798 
 RMSPE : 0.096114 
-Wall time: 8.82 s
+Wall time: 23.4 s
 
     \end{Verbatim}
 
@@ -1698,10 +1748,10 @@ Wall time: 8.82 s
 \subsubsection{Extra Trees Regression}\label{extra-trees-regression}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}248}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{etr} \PY{o}{=} \PY{n}{ExtraTreesRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{etr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Extra Trees Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}61}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{etr} \PY{o}{=} \PY{n}{ExtraTreesRegressor}\PY{p}{(}\PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{etr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Extra Trees Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1714,7 +1764,7 @@ MAE   : 274.049600
 RMSE  : 545.539772 
 R2    : 0.981144 
 RMSPE : 0.098128 
-Wall time: 13.4 s
+Wall time: 25.4 s
 
     \end{Verbatim}
 
@@ -1722,24 +1772,24 @@ Wall time: 13.4 s
 \subsubsection{Comparação}\label{comparauxe7uxe3o}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}249}]:} \PY{n}{compare} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
-          \PY{n}{compare}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{model\PYZus{}dict}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
-          \PY{n}{compare}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{model\PYZus{}dict}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
-          
-          \PY{n}{compare} \PY{o}{=} \PY{n}{compare}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-          \PY{n}{compare}
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{compare} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
+         \PY{n}{compare}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{model\PYZus{}dict}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+         \PY{n}{compare}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{model\PYZus{}dict}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{compare} \PY{o}{=} \PY{n}{compare}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSPE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{compare}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}249}]:}                                  RMSPE
-          Model                                 
-          Gradient Boosting Regression  0.091436
-          Random Forest Regression      0.096114
-          Extra Trees Regression        0.098128
-          Ridge Regression              0.483945
-          Lasso Regression              0.553080
-          AdaBoost Regression           0.669976
-          Linear Regressor              0.739535
+{\color{outcolor}Out[{\color{outcolor}62}]:}                                  RMSPE
+         Model                                 
+         Gradient Boosting Regression  0.091436
+         Random Forest Regression      0.096114
+         Extra Trees Regression        0.098128
+         Ridge Regression              0.483945
+         Lasso Regression              0.553080
+         AdaBoost Regression           0.669976
+         Linear Regressor              0.739535
 \end{Verbatim}
             
     Como o modelo que apresentou menor RMSPE foi o \emph{Gradient Boosting
@@ -1760,32 +1810,51 @@ de dados: 1. Random Search; 2. Grid Search.
 \subsubsection{Random Search}\label{random-search}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}250}]:} \PY{c+c1}{\PYZsh{} Definindo a grid para aplicar RandomizedSearchCV}
-          \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
-          \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{]}
-          \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{]}
-          \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
-          \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}
-          \PY{n}{bootstrap} \PY{o}{=} \PY{p}{[}\PY{k+kc}{True}\PY{p}{]}
-          \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
-          \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{]}
-          
-          \PY{n}{random\PYZus{}grid} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}estimators}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{n\PYZus{}estimators}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{max\PYZus{}features}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{max\PYZus{}depth}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}split}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{min\PYZus{}samples\PYZus{}split}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}leaf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{min\PYZus{}samples\PYZus{}leaf}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{random\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{random\PYZus{}state}\PY{p}{,}
-                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{learning\PYZus{}rate}\PY{p}{\PYZcb{}}
-          
-          \PY{n+nb}{print}\PY{p}{(}\PY{n}{random\PYZus{}grid}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}63}]:} \PY{c+c1}{\PYZsh{} Definindo a grid para aplicar RandomizedSearchCV}
+         \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
+         \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{]}
+         \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{]}
+         \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
+         \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}
+         \PY{n}{bootstrap} \PY{o}{=} \PY{p}{[}\PY{k+kc}{True}\PY{p}{]}
+         \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+         \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{random\PYZus{}grid} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}estimators}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{n\PYZus{}estimators}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{max\PYZus{}features}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{max\PYZus{}depth}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}split}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{min\PYZus{}samples\PYZus{}split}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}leaf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{min\PYZus{}samples\PYZus{}leaf}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{random\PYZus{}state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{random\PYZus{}state}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{learning\PYZus{}rate}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{random\PYZus{}grid}
 \end{Verbatim}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-\{'n\_estimators': [500, 1000, 1500, 2000, 2500], 'max\_features': [7, 8, 9], 'max\_depth': [10, 12, 14], 'min\_samples\_split': [2, 3, 4], 'min\_samples\_leaf': [2, 4, 6], 'random\_state': [2], 'learning\_rate': [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14, 0.15]\}
-
-    \end{Verbatim}
-
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}63}]:} \{'n\_estimators': [500, 1000, 1500, 2000, 2500],
+          'max\_features': [7, 8, 9],
+          'max\_depth': [10, 12, 14],
+          'min\_samples\_split': [2, 3, 4],
+          'min\_samples\_leaf': [2, 4, 6],
+          'random\_state': [2],
+          'learning\_rate': [0.01,
+           0.02,
+           0.03,
+           0.04,
+           0.05,
+           0.06,
+           0.07,
+           0.08,
+           0.09,
+           0.1,
+           0.11,
+           0.12,
+           0.13,
+           0.14,
+           0.15]\}
+\end{Verbatim}
+            
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}62}]:} \PY{c+c1}{\PYZsh{} Aplicando RandomizedSearchCV ao Gradient Boosting Regressor}
          
@@ -1798,7 +1867,8 @@ de dados: 1. Random Search; 2. Grid Search.
                                      \PY{n}{verbose} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} 
                                      \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} 
                                      \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}
-                                     \PY{n}{scoring} \PY{o}{=} \PY{n}{make\PYZus{}scorer}\PY{p}{(}\PY{n}{rmspe\PYZus{}score}\PY{p}{,} \PY{n}{greater\PYZus{}is\PYZus{}better} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+                                     \PY{n}{scoring} \PY{o}{=} \PY{n}{make\PYZus{}scorer}\PY{p}{(}\PY{n}{rmspe\PYZus{}score}\PY{p}{,} \PYZbs{}
+                                                           \PY{n}{greater\PYZus{}is\PYZus{}better} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
          \PY{p}{)}
          
          \PY{c+c1}{\PYZsh{} Treina o modelo com 100 possibilidades aleatorias dentro do conjunto}
@@ -1863,7 +1933,8 @@ Search.
                                  \PY{n}{cv} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,}
                                  \PY{n}{verbose} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,}
                                  \PY{n}{n\PYZus{}jobs} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}
-                                 \PY{n}{scoring} \PY{o}{=} \PY{n}{make\PYZus{}scorer}\PY{p}{(}\PY{n}{rmspe\PYZus{}score}\PY{p}{,} \PY{n}{greater\PYZus{}is\PYZus{}better} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+                                 \PY{n}{scoring} \PY{o}{=} \PY{n}{make\PYZus{}scorer}\PY{p}{(}\PY{n}{rmspe\PYZus{}score}\PY{p}{,} \PYZbs{}
+                                                       \PY{n}{greater\PYZus{}is\PYZus{}better} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
          \PY{p}{)}
          
          \PY{c+c1}{\PYZsh{} Treina o modelo com todas as combinacoes}
@@ -1917,13 +1988,14 @@ números inteiros variando de 1 ao número de categorias de cada um.
 \paragraph{Avaliação do Modelo}\label{avaliauxe7uxe3o-do-modelo}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}111}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
-          
-          \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.02}\PY{p}{,} \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{l+m+mi}{7}\PY{p}{,} \PYZbs{}
-                                          \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PYZbs{}
-                                          \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-          
-          \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{gbr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}64}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+         
+         \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.02}\PY{p}{,} \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PYZbs{}
+                                         \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{l+m+mi}{7}\PY{p}{,} \PYZbs{}
+                                         \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
+                                         \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+         
+         \PY{n}{model\PYZus{}analysis}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{gbr}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gradient Boosting Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1936,7 +2008,7 @@ MAE   : 270.458491
 RMSE  : 547.680805 
 R2    : 0.980995 
 RMSPE : 0.089367 
-Wall time: 2min 11s
+Wall time: 2min 10s
 
     \end{Verbatim}
 
@@ -1944,13 +2016,14 @@ Wall time: 2min 11s
 \paragraph{Arquivo Submetido}\label{arquivo-submetido}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}112}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
+{\color{incolor}In [{\color{incolor}256}]:} \PY{o}{\PYZpc{}\PYZpc{}time}
           \PY{n}{x} \PY{o}{=} \PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
           \PY{n}{y} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
           
-          \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.02}\PY{p}{,} \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{l+m+mi}{7}\PY{p}{,} \PYZbs{}
-                                          \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PYZbs{}
-                                          \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
+          \PY{n}{gbr} \PY{o}{=} \PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.02}\PY{p}{,} \PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,} \PYZbs{}
+                                          \PY{n}{max\PYZus{}features} \PY{o}{=} \PY{l+m+mi}{7}\PY{p}{,} \PYZbs{}
+                                          \PY{n}{min\PYZus{}samples\PYZus{}leaf} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PYZbs{}
+                                          \PY{n}{n\PYZus{}estimators} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{random\PYZus{}state} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
           
           \PY{n}{gbr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}
           \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{gbr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{test}\PY{p}{)}
@@ -1961,21 +2034,20 @@ Wall time: 2min 11s
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Wall time: 3min 36s
+Wall time: 32.1 s
 
     \end{Verbatim}
 
     \hypertarget{conclusuxe3o}{%
 \section{Conclusão}\label{conclusuxe3o}}
 
-    O trabalho foi de extrema importância para o desenvolvimento do
-conhecimento da autora sobre o assunto e gerou motivação para a
-realização de um bom modelo. Com o aprendizado obtido a partir dele, foi
-possível conceber novas ideias de Aprendizado de Máquina e definir
-métricas de melhoria para trabalhos futuros, onde se verificariam a
-robustez e capacidade de generalização do modelo de forma ainda mais
-específica, utilizando métricas de verificação da variação durante a
-validação cruzada, etc.
+    O trabalho foi de extrema importância para desenvolver o conhecimento
+sobre o assunto e gerou motivação para a realização de um bom modelo.
+Com o aprendizado obtido a partir dele, foi possível conceber novas
+ideias de Aprendizado de Máquina e definir métricas de melhoria para
+trabalhos futuros, onde se verificariam a robustez e capacidade de
+generalização do modelo de forma ainda mais específica, utilizando
+métricas de verificação da variação durante a validação cruzada, etc.
 
 O resultado obtido pelo código da maneira como ele se encontra, porém,
 não foi o melhor de todos. Durante alguns dos testes, a autora trocou os
