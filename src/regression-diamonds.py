@@ -4,9 +4,9 @@
 # # Trabalho 1 - Regressão Multivariável
 # # Estimativa de preços de diamantes de acordo com suas características.
 # 
-# UFRJ/POLI/DEL - Introdução ao Aprendizado de Máquina (EEL891)  
-# Prof. Heraldo Almeira - Julho de 2019 
-# Maria Gabriella Andrade Felgas (DRE: 111471809)
+# UFRJ/POLI/DEL - Introdução ao Aprendizado de Máquina (EEL891)   
+# Prof. Heraldo Almeira - Julho de 2019  
+# Maria Gabriella Andrade Felgas
 
 # # Introdução
 
@@ -69,11 +69,11 @@ import seaborn as sns
 
 # Bibliotecas dos modelos de treinamento
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor,                              AdaBoostRegressor, ExtraTreesRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor, ExtraTreesRegressor
 
 # Bibliotecas de ferramentas e métricas
-from sklearn.model_selection import train_test_split, RandomizedSearchCV,                                     GridSearchCV, cross_val_score, cross_validate
-from sklearn.metrics import mean_squared_error, r2_score,                             mean_absolute_error, make_scorer
+from sklearn.model_selection import train_test_split, RandomizedSearchCV, GridSearchCV, cross_val_score, cross_validate
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, make_scorer
 
 
 # # Mineração e Análise de Dados
@@ -87,7 +87,7 @@ from sklearn.metrics import mean_squared_error, r2_score,                       
 
 # Carregando os dados de treino como dataframe
 # e observando os atributos
-train = pd.read_csv('data/train.csv')
+train = pd.read_csv('../data/train.csv')
 train.head()
 
 
@@ -149,7 +149,7 @@ train.describe()
 
 
 # Carregando os dados de teste como dataframe
-test = pd.read_csv('data/test.csv')
+test = pd.read_csv('../data/test.csv')
 test.head()
 
 
@@ -214,6 +214,18 @@ plt.show()
 
 # Funcao de analise de atributo
 def analysis(feature, hist=True):
+    '''
+    Função de análise: Define os parâmetros de assimetria e curtose do atributo
+    passado, plota o histograma e o diagrama de dispersão em relação ao alvo.
+    
+    Entrada : feature               - Atributo a ser analisado.
+              hist                  - Controle de visualização do histograma, booleana.
+              
+    Saída   : Skewness              - Medida de assimetria da distribuição.
+              Kurtosis              - Medida de curtose, quantidade de outliers.
+              Histograma            - Gráfico da distribuição de dados em relação ao atributo passado.
+              Diagrama de dispersão - Gráfico de dispersão do atributo em relação ao alvo.
+    '''
     
     # Definindo os valores de Skewness e Kurtosis
     # para analisar a simetria e quantidade de
@@ -228,7 +240,9 @@ def analysis(feature, hist=True):
         plt.show()
     
     if feature != 'price':
-        # Plotando o diagrama de dispersão
+        # Plotando o diagrama de dispersao,
+        # esse grafico soh faz sentido se o
+        # atributo nao for o preco
         plt.figure(figsize=(20,10))
         train.plot.scatter(x = feature, y = 'price')
         plt.show()
@@ -236,13 +250,25 @@ def analysis(feature, hist=True):
         
 # Funcao que checa a contagem para cada limiar    
 def count_limit(feature, inf_limit, sup_limit, hop):
+    '''
+    Função de contagem de dados relacionados aos limiares específicos do atributo passado.
+    Calcula a porcentagem em relação ao total para cada limite.
+    
+    Entrada : feature     - Atributo a ser analisado.
+              inf_limit   - Primeiro limite de contagem (após o zero).
+              sup_limit   - Último limite de contagem (última marcação no histograma).
+              hop         - Salto entre cada contagem.
+              
+    Saída   : Quantidade  - Quantidade de dados abaixo de cada limite.
+              Porcentagem - Porcentagem de dados abaixo de cada limite.
+    '''
     
     n = int((sup_limit - inf_limit) / hop)
     p = np.zeros(((n + 1), 2))
     
     for i in range(n + 1):
-        p[i][0] = train[train[feature] <                         (inf_limit + (hop * i))][feature].count()
-        p[i][1] = np.round((p[i][0] /                             train[train[feature] <                                   sup_limit][feature].count()) * 100, 2)
+        p[i][0] = train[train[feature] < (inf_limit + (hop * i))][feature].count()
+        p[i][1] = np.round((p[i][0] / train[train[feature] < sup_limit][feature].count()) * 100, 2)
         print('Pontos abaixo de {} :'.format(inf_limit + (hop * i)), p[i][0],               'Porcentagem: {} %'.format(p[i][1]))
 
 
@@ -575,15 +601,26 @@ test.head()
 # # nas medias de preco por categoria
 
 # def categ_feature(feature, data):
-#     mean = train.groupby(feature)['price'].mean()
-#     mean_sort = mean.reset_index().sort_values(['price']).\
-#                 set_index([feature]).astype(int)
+#     '''
+#     Função de transformação dos atributos categóricos nas médias de preço de cada categoria.
     
+#     Entrada : feature   - Atributo a ser analisado.
+#               data      - Base de dados onde a transformação será realizada.
+              
+#     Saída   : mean_sort - Dicionário de atribuição das médias de preço para cada categoria.
+#               data      - Base de dados transformada.
+#     '''    
+    
+#     # define a media dos precos
+#     mean = train.groupby(feature)['price'].mean()
+#     mean_sort = mean.reset_index().sort_values(['price']).set_index([feature]).astype(int)
+    
+#     # transforma as relacoes de categoria e media respectiva em um dicionario
 #     mean_sort.to_dict()
 #     mean_sort = mean_sort['price']
     
-#     data[feature] = data[feature].replace(mean_sort, \
-#                                           inplace = False)
+#     # substitui as categorias por suas medias de preco
+#     data[feature] = data[feature].replace(mean_sort, inplace = False)
     
 #     return mean_sort, data
 
@@ -595,18 +632,15 @@ test.head()
 
 # # cut
 # mean_sort_cut, train = categ_feature('cut', train)
-# test['cut'] = test['cut'].replace(mean_sort_cut, \
-#                                   inplace = False)
+# test['cut'] = test['cut'].replace(mean_sort_cut, inplace = False)
 
 # #color
 # mean_sort_color, train = categ_feature('color', train)
-# test['color'] = test['color'].replace(mean_sort_color, \
-#                                       inplace = False)
+# test['color'] = test['color'].replace(mean_sort_color, inplace = False)
 
 # #clarity
 # mean_sort_clarity, train = categ_feature('clarity', train)
-# test['clarity'] = test['clarity'].replace(mean_sort_clarity, \
-#                                           inplace = False)
+# test['clarity'] = test['clarity'].replace(mean_sort_clarity, inplace = False)
 
 # # Visualizando teste para checar funcionamento
 # test.head()
@@ -641,7 +675,7 @@ y = train['price']
 
 # Criacao de conjuntos de treino e pseudo-teste
 # a partir do conjunto geral de treino
-X_train, X_test, y_train, y_test = train_test_split(x, y,                                    random_state = 2, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(x, y, random_state = 2, test_size=0.3)
 
 
 # Cria-se, adicionalmente, um dicionário de comparação que irá armazenar todos os RMSPE analisados durante os próximos passos. Este dicionário servirá para demonstrar o modelo que gerou o melhor resultado.  
@@ -651,7 +685,7 @@ X_train, X_test, y_train, y_test = train_test_split(x, y,                       
 # In[52]:
 
 
-# Arrays de referência para comparação entre modelos
+# Dicionario de referência para comparacao entre modelos
 model_dict = {'Linear Regressor': 1,
               'Lasso Regression': 1,
               'Ridge Regression': 1,
@@ -664,8 +698,16 @@ model_dict = {'Linear Regressor': 1,
 # In[53]:
 
 
-# Função que calcula o RMSPE para validacao dos modelos
+# Funcao que calcula o RMSPE para validacao dos modelos
 def rmspe_score(y_test, y_pred):
+    '''
+    Função para calcular a métrica RMSPE.
+    
+    Entrada : y_test - Array de alvos, gabarito.
+              y_pred - Array de alvos, previsto pelo modelo.
+              
+    Saída   : rmspe  - RMSPE da comparação.
+    '''
     
     rmspe = np.sqrt(np.mean(np.square(((y_test - y_pred) / y_test)), axis = 0))
 
@@ -677,6 +719,25 @@ def rmspe_score(y_test, y_pred):
 
 # Funcao de regressao generica, para varios modelos diferentes
 def model_analysis(X_train, X_test, y_train, y_test, regressor, name):
+    '''
+    Função generalizada para análise de cada modelo de regressão.
+    
+    Entrada : X_train   - Conjunto de treino, atributos.
+              X_test    - Conjunto de teste, atributos.
+              y_train   - Conjunto de treino, alvo.
+              y_test    - Conjunto de teste, alvo.
+              regressor - Modelo sendo testado.
+              name      - Nome do modelo testado.
+              
+    Saída   : Name      - Nome do modelo testado.
+              Score     - Pontuação do modelo testado.
+              MSE       - MSE do modelo testado.
+              MAE       - MAE do modelo testado.
+              RMSE      - RMSE do modelo testado.
+              R2        - R2 do modelo testado.
+              RMSPE     - RMSPE do modelo testado.
+    '''
+    
     regressor.fit(X_train, y_train)
     y_pred = regressor.predict(X_test)
     print('')
@@ -765,6 +826,10 @@ get_ipython().run_cell_magic('time', '', "\netr = ExtraTreesRegressor(n_estimato
 
 
 compare = pd.DataFrame()
+
+# exibe o dicionario de comparação entre o RMSPE
+# de cada um dos modelos testados e disponibiliza de
+# forma crescente
 compare['Model'] = model_dict.keys()
 compare['RMSPE'] = model_dict.values()
 
